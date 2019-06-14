@@ -1,6 +1,6 @@
 package tmall.bean;
 /**
- * ÓÃ»§
+ * ç”¨æˆ·
  * @author Administrator
  *
  */
@@ -27,7 +27,7 @@ public class Tuser {
 		this.id = id;
 	}
 	/**
-	 * ¶ÔÓÃ»§Ãû½øĞĞ¼Ó"*"´¦Àí
+	 * å¯¹ç”¨æˆ·åè¿›è¡ŒåŠ "*"å¤„ç†
 	 * @return
 	 */
 	public String getAnonymousName(){

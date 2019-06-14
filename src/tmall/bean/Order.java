@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * ¶©µ¥
+ * è®¢å•
  * @author Administrator
  *
  */
@@ -25,25 +25,25 @@ public class Order {
 	private String status;
 	
 	public String getStatusDesc(){
-		String desc = "Î´Öª";
+		String desc = "æœªçŸ¥";
 		switch(status){
 			case OrderDAO.waitPay:
-				desc="´ı¸¶¿î";
+				desc="å¾…ä»˜æ¬¾";
 				break;
 			case OrderDAO.waitDelivery:
-				desc="´ı·¢»õ";
+				desc="å¾…å‘è´§";
 				break;
 			case OrderDAO.waitReview:
-				desc="´ıÆÀ¼Û";
+				desc="å¾…è¯„ä»·";
 				break;
 			case OrderDAO.finish:
-				desc="Íê³É";
+				desc="å®Œæˆ";
 				break;
 			case OrderDAO.delete:
-				desc="É¾³ı";
+				desc="åˆ é™¤";
 				break;
 			default:
-				desc="Î´Öª";
+				desc="æœªçŸ¥";
 		}
 	}
 	

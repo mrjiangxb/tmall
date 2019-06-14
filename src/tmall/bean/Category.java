@@ -2,15 +2,15 @@ package tmall.bean;
 
 import java.util.List;
 /**
- * ·ÖÀà
+ * åˆ†ç±»
  * @author Administrator
  *
  */
 public class Category {
 	private String name;
 	private int id;
-	List<Product> products;    //·ÅÔÚ¼¯ºÏÖĞ±ãÓÚ·ÖÀà¼ìË÷
-	List<List<Product>> productsByRow;  //ÎªÁËÔÚÊ×Ò³Êú×´µ¼º½µÄ·ÖÀàÃû³ÆÓÒ±ßÏÔÊ¾²úÆ·ÁĞ±í
+	List<Product> products;    //æ”¾åœ¨é›†åˆä¸­ä¾¿äºåˆ†ç±»æ£€ç´¢
+	List<List<Product>> productsByRow;  //ä¸ºæ”¾åœ¨é›†åˆä¸­ä¾¿äºåˆ†ç±»æ£€ç´¢äº†åœ¨é¦–é¡µç«–çŠ¶å¯¼èˆªçš„åˆ†ç±»åç§°å³è¾¹æ˜¾ç¤ºäº§å“åˆ—è¡¨
 	public String getName() {
 		return name;
 	}
@@ -19,7 +19,7 @@ public class Category {
 	}
 	@Override
 	public String toString() {
-		return "Category [name="+name+"]";     //²âÊÔÓÃ£¬Êµ¼ÊÒµÎñ²»»áµ÷ÓÃ
+		return "Category [name="+name+"]";     //æµ‹è¯•ç”¨ï¼Œå®é™…ä¸šåŠ¡ä¸ä¼šè°ƒç”¨
 	}
 	public int getId() {
 		return id;

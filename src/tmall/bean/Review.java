@@ -3,15 +3,15 @@ package tmall.bean;
 import java.util.Date;
 
 /**
- * 评价
+ * 璇勪环
  * @author Administrator
  *
  */
 public class Review {
 	private String content;
 	private Date creatDate;
-	private Tuser user;        //关联用户
-	private Product product;   //关联产品
+	private Tuser user;        //鍏宠仈鐢ㄦ埛
+	private Product product;   //鍏宠仈浜у搧
 	private int id;
 	public String getContent() {
 		return content;

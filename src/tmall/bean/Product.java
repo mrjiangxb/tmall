@@ -4,20 +4,20 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * ²úÆ·
+ * äº§å“
  * @author Administrator
  */
-// Ã»ÓĞ¿â´æÊôĞÔ  Ä¬ÈÏ¶¼Îª1
+// æ²¡æœ‰åº“å­˜å±æ€§  é»˜è®¤éƒ½ä¸º1
 public class Product {
 	private String name;
 	private String subTitle;
 	private float price;
 	private Date createDate;
-	private Category category;  //ÓëCategory¶à¶ÔÒ»¹ØÏµ
+	private Category category;  //ä¸Categoryå¤šå¯¹ä¸€å…³ç³»
 	private int id;
 	private List<ProductImage> productImages; 
-	private ProductImage firstProductImage;  //È¡³öµÚÒ»ÕÅ²úÆ·Í¼Æ¬ÓÃÓÚËÑË÷Ò³Õ¹Ê¾
-	private int reviewCount; //ÆÀ¼ÛÊıÁ¿  
+	private ProductImage firstProductImage;  //å–å‡ºç¬¬ä¸€å¼ äº§å“å›¾ç‰‡ç”¨äºæœç´¢é¡µå±•ç¤º
+	private int reviewCount; //è¯„ä»·æ•°é‡  
 }
 
 

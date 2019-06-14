@@ -1,6 +1,6 @@
 package tmall.bean;
 /**
- * ¶©µ¥Ïî
+ * è®¢å•é¡¹
  * @author Administrator
  *
  */

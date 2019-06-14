@@ -1,13 +1,13 @@
 package tmall.bean;
 /**
- * ÊôĞÔÖµ
+ * å±æ€§å€¼
  * @author Administrator
  *
  */
 public class PropertyValue {
 	private String value;
-	private Product product;    //¹ØÁª²úÆ·
-	private Property property;  //¹ØÁªÊôĞÔ
+	private Product product;    //å…³è”äº§å“
+	private Property property;  //å…³è”å±æ€§
 	private int id;
 	public String getValue() {
 		return value;

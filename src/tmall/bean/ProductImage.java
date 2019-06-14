@@ -1,11 +1,11 @@
 package tmall.bean;
 /**
- * 产品图片
+ * 浜у搧鍥剧墖
  * @author Administrator
  *
  */
 public class ProductImage {
-	private Product product; //与Product多对一关系
+	private Product product; //涓嶱roduct澶氬涓�鍏崇郴
 	public Product getProduct() {
 		return product;
 	}

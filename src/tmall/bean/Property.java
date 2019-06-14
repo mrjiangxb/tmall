@@ -1,12 +1,12 @@
 package tmall.bean;
 /**
- * ÊôĞÔ
+ * å±æ€§
  * @author Administrator
  *
  */
 public class Property {
 	private String name;
-	private Category category;  //Àà±ğ
+	private Category category;  //ç±»åˆ«
 	private int id;
 	public String getName() {
 		return name;
