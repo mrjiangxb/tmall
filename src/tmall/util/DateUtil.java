@@ -1,7 +1,7 @@
 package tmall.util;
 /**
  * util.Date 与 sql.Date 类型转换
- * @author Administrator
+ * @author JXB
  *
  */
 public class DateUtil {
