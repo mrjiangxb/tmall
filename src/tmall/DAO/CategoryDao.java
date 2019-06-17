@@ -103,8 +103,9 @@ public class CategoryDao {
 	}
 	
 	public List<Category> list(int start, int count){
+		List<Category> categorys = new ArrayList<Category>();
+		sql = "select id,name from (select id,name,rownum as num from Category order by id desc) where num between ? and ?";
 		return null;
-		
 	}
 }
 
