@@ -8,24 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tmall.bean.Category;
+import tmall.bean.Product;
+import tmall.bean.ProductImage;
 import tmall.bean.Property;
-import tmall.bean.Tuser;
 import tmall.util.JdbcUtil;
 
-public class PropertyDAO {
+public class ProductImageDAO {
 	JdbcUtil jdbc;
 	String sql;
 	ResultSet rs;
-	Property bean = new Property();
+	 ProductImage bean = new ProductImage();
 	List<Object> params = new ArrayList<Object>();
-	List<Property> beans = new ArrayList<Property>();
+	List<ProductImage> beans = new ArrayList<ProductImage>();
 	
-	/*
-	 * 获取某种分类下的属性总数，在分页显示的时候会用到
-	 */
-	public int getTotal(int cid){
+	public int getTotal(){
 		int total = 0;
-		sql = "select count(*) from Property where cid="+cid;
+		sql = "select count(*) from productimage ";
 		rs = jdbc.doIt(sql);
 			try {
 				while(rs.next()){
@@ -37,17 +35,12 @@ public class PropertyDAO {
 		return total;
 	}
 	
-	/**
-	 * 增
-	 * @param property
-	 */
-	public void add(Property bean){
-		sql = "insert into property values(null,?,?)";
+	public void add(ProductImage bean){
+		sql = "insert into ProductImage values(null,?)";
 		Connection conn = jdbc.getConnection();
 		try {
 			PreparedStatement pstm = conn.prepareStatement(sql);
-			pstm.setInt(1, bean.getCategory().getId());//外键为Category主键
-			pstm.setString(2, bean.getName());
+			pstm.setInt(1, bean.getProduct().getId());//外键为Category主键
 			pstm.execute();
 			rs = pstm.getGeneratedKeys(); //获取自增的主键
 			if(rs.next()){
@@ -63,11 +56,10 @@ public class PropertyDAO {
 	 * 改
 	 * @param property
 	 */
-	public void update(Property bean){
-		sql = "update property set name=? ,cid=? where id=?";
-		params.add(bean.getName());
-		params.add(bean.getCategory().getId());
+	public void update(ProductImage bean){
+		sql = "update productImage set id=? ,pid=?";
 		params.add(bean.getId());
+		params.add(bean.getProduct().getId());
 		jdbc.updatePreparedStatement(sql, params);
 	}
 	
@@ -76,21 +68,19 @@ public class PropertyDAO {
 	 * @param id
 	 */
 	public void delete(int id){
-		sql = "delete from property where id= "+id;
+		sql = "delete from productImage where id= "+id;
 		jdbc.doIt(sql);
 	}
 	
-	public Property get(int id){
-		sql = "select * from property where id="+id;
+	public ProductImage get(int id){
+		sql = "select * from productImage where id="+id;
 		rs=jdbc.doIt(sql);
 		try {
 			if(rs.next()){
-				String name = rs.getString("name");
-				int cid = rs.getInt("cid");
-				Category category = new CategoryDAO().get(cid);//该属性对应的类
-				bean.setName(name);
-				bean.setCategory(category);
+				int pid = rs.getInt("pid");
+				Product product = new ProductDAO().get(pid);//该属性对应的类
 				bean.setId(id);
+				bean.setProduct(product);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -98,29 +88,19 @@ public class PropertyDAO {
 		return bean;
 	}
 	
-	//查询某个分类下的的属性对象
-	public List<Property> list(int cid, int start, int count){
+	//查询指定产品下，某种类型的ProductImage
+	public List<ProductImage> list(Product p, int start, int count){
 		sql = "select id,cid,name from (select id,cid,name,rownum as num from property where cid=? order by id desc) where num between ? and ?";
-		params.add(cid);
+		params.add(p.getId());
 		params.add(start);
 		params.add(count);
-		beans = jdbc.queryPreparedStatement(sql, params, Property.class);
+		beans = jdbc.queryPreparedStatement(sql, params, ProductImage.class);
 		return beans;
 	}
 	
-	//查询某个分类下的的属性对象
-	public List<Property> list(int cid) {
-	    return list(cid, 0, Short.MAX_VALUE);
+	public List<ProductImage> list(Product p, String type) {
+	    return list(p, 0, Short.MAX_VALUE);
 	}
 }
-
-
-
-
-
-
-
-
-
 
 

@@ -5,7 +5,9 @@ package tmall.bean;
  *
  */
 public class ProductImage {
+	private int id;
 	private Product product; //与Product多对一关系
+	
 	public Product getProduct() {
 		return product;
 	}
@@ -18,5 +20,4 @@ public class ProductImage {
 	public void setId(int id) {
 		this.id = id;
 	}
-	private int id;
 }

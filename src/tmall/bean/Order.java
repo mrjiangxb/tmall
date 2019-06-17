@@ -3,6 +3,8 @@ package tmall.bean;
 import java.util.Date;
 import java.util.List;
 
+import tmall.DAO.OrderDAO;
+
 /**
  * 订单
  * @author Administrator
@@ -45,6 +47,7 @@ public class Order {
 			default:
 				desc="未知";
 		}
+		return desc;
 	}
 	
 	public String getOrderCode() {

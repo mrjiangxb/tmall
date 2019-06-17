@@ -15,9 +15,9 @@ public class TuserDAO {
 	JdbcUtil jdbc;
 	String sql;
 	ResultSet rs;
-	Tuser tuser = null;
+	Tuser bean = new Tuser();
 	List<Object> params = new ArrayList<Object>();
-	List<Tuser> tusers = new ArrayList<Tuser>();
+	List<Tuser> beans = new ArrayList<Tuser>();
 	
 	/**
 	 * @return 总数
@@ -40,18 +40,18 @@ public class TuserDAO {
 	 * 增
 	 * @param tuser
 	 */
-	public void add(Tuser tuser){
+	public void add(Tuser bean){
 		sql = "insert into Tuser values(null,?,?)";
 		Connection conn = jdbc.getConnection();
 		try {
 			PreparedStatement pstm = conn.prepareStatement(sql);
-			pstm.setString(1, tuser.getName());
-			pstm.setString(2, tuser.getPassword());
+			pstm.setString(1, bean.getName());
+			pstm.setString(2, bean.getPassword());
 			pstm.execute();
 			rs = pstm.getGeneratedKeys(); //获取自增的主键
 			if(rs.next()){
 				int id = rs.getInt(1);
-				tuser.setId(id);
+				bean.setId(id);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -62,11 +62,11 @@ public class TuserDAO {
 	 * 改
 	 * @param tuser
 	 */
-	public void update(Tuser tuser){
+	public void update(Tuser bean){
 		sql = "update tuser set name=? ,password=? where id=?";
-		params.add(tuser.getName());
-		params.add(tuser.getPassword());
-		params.add(tuser.getId());
+		params.add(bean.getName());
+		params.add(bean.getPassword());
+		params.add(bean.getId());
 		jdbc.updatePreparedStatement(sql, params);
 	}
 	
@@ -88,21 +88,16 @@ public class TuserDAO {
 		rs=jdbc.doIt(sql);
 		try {
 			if(rs.next()){
-				tuser = new Tuser();
 				String name = rs.getString("name");
 				String password = rs.getString("password");
-				tuser.setName(name);
-				tuser.setPassword(password);
-				tuser.setId(id);
+				bean.setName(name);
+				bean.setPassword(password);
+				bean.setId(id);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return tuser;
-	}
-	
-	public List<Tuser> list() {
-	    return list(0, getTotal());
+		return bean;
 	}
 	
 	//返回Tuser结果集
@@ -110,8 +105,8 @@ public class TuserDAO {
 		sql = "select id,name,password from (select id,name,password,rownum as num from Tuser order by id desc) where num between ? and ?";
 		params.add(start);
 		params.add(count);
-		tusers = jdbc.queryPreparedStatement(sql, params, Tuser.class);
-		return tusers;
+		beans = jdbc.queryPreparedStatement(sql, params, Tuser.class);
+		return beans;
 	}
 	
 	/*
@@ -121,14 +116,14 @@ public class TuserDAO {
 	public Tuser get(String name){
 		sql = "select * from tuser where name=?";
 		params.add(name);
-		tusers = jdbc.queryPreparedStatement(name, params, Tuser.class);
-		tuser = tusers.get(0);
-		return tuser;
+		beans = jdbc.queryPreparedStatement(name, params, Tuser.class);
+		bean = beans.get(0);
+		return bean;
 	}
 	
 	public boolean isExist(String name) {
-        tuser = get(name);
-        return tuser!=null;
+		bean = get(name);
+        return bean!=null;
     }
 	
 	/*
@@ -138,9 +133,13 @@ public class TuserDAO {
 		sql = "select * from tuser where name=? and password=?";
 		params.add(name);
 		params.add(password);
-		tusers = jdbc.queryPreparedStatement(name, params, Tuser.class);
-		tuser = tusers.get(0);
-		return tuser;
+		beans = jdbc.queryPreparedStatement(name, params, Tuser.class);
+		bean = beans.get(0);
+		return bean;
+	}
+	
+	public List<Tuser> list() {
+	    return list(0, Short.MAX_VALUE);
 	}
 }
 

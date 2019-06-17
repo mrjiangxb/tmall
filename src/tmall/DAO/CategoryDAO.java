@@ -18,7 +18,9 @@ public class CategoryDAO {
 	JdbcUtil jdbc;
 	String sql;
 	ResultSet rs;
+	Category bean = new Category();
 	List<Object> params = new ArrayList<Object>();
+	List<Category> beans = new ArrayList<Category>();
 	/**
 	 * @return 总数
 	 */
@@ -40,17 +42,17 @@ public class CategoryDAO {
 	 * 增
 	 * @param category
 	 */
-	public void add(Category category){
+	public void add(Category bean){
 		sql = "insert into category values(null,?)";
 		Connection conn = jdbc.getConnection();
 		try {
 			PreparedStatement pstm = conn.prepareStatement(sql);
-			pstm.setString(1, category.getName());
+			pstm.setString(1, bean.getName());
 			pstm.execute();
 			rs = pstm.getGeneratedKeys(); //获取自增的主键
 			if(rs.next()){
 				int id = rs.getInt(1);
-				category.setId(id);
+				bean.setId(id);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,10 +63,10 @@ public class CategoryDAO {
 	 * 改
 	 * @param category
 	 */
-	public void update(Category category){
+	public void update(Category bean){
 		sql = "update category set name=? where id=?";
-		params.add(category.getName());
-		params.add(category.getId());
+		params.add(bean.getName());
+		params.add(bean.getId());
 		jdbc.updatePreparedStatement(sql, params);
 	}
 	
@@ -82,34 +84,31 @@ public class CategoryDAO {
 	 * @return Category
 	 */
 	public Category get(int id){
-		Category category = null;
 		sql = "select * from category where id="+id;
 		rs=jdbc.doIt(sql);
 		try {
 			if(rs.next()){
-				category = new Category();
 				String name = rs.getString("name");//表中第二列name
-				category.setName(name);
-				category.setId(id);
+				bean.setName(name);
+				bean.setId(id);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return category;
-	}
-	
-	public List<Category> list() {
-	    return list(0, getTotal());
+		return bean;
 	}
 	
 	//返回Category结果集
 	public List<Category> list(int start, int count){
-		List<Category> categorys = new ArrayList<Category>();
 		sql = "select id,name from (select id,name,rownum as num from Category order by id desc) where num between ? and ?";
 		params.add(start);
 		params.add(count);
-		categorys = jdbc.queryPreparedStatement(sql, params, Category.class);
-		return categorys;
+		beans = jdbc.queryPreparedStatement(sql, params, Category.class);
+		return beans;
+	}
+	
+	public List<Category> list() {
+	    return list(0, Short.MAX_VALUE);
 	}
 }
 
