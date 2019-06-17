@@ -1,5 +1,6 @@
 package tmall.DAO;
 
+import java.beans.Beans;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,7 @@ import tmall.util.JdbcUtil;
  * 建立对于Category对象的ORM映射
  * @author JXB
  */
-public class CategoryDao {
+public class CategoryDAO {
 	JdbcUtil jdbc;
 	String sql;
 	ResultSet rs;
@@ -87,7 +88,7 @@ public class CategoryDao {
 		try {
 			if(rs.next()){
 				category = new Category();
-				String name = rs.getString(2);//表中第二列name
+				String name = rs.getString("name");//表中第二列name
 				category.setName(name);
 				category.setId(id);
 			}
@@ -97,15 +98,18 @@ public class CategoryDao {
 		return category;
 	}
 	
-	///////
 	public List<Category> list() {
 	    return list(0, getTotal());
 	}
 	
+	//返回Category结果集
 	public List<Category> list(int start, int count){
 		List<Category> categorys = new ArrayList<Category>();
 		sql = "select id,name from (select id,name,rownum as num from Category order by id desc) where num between ? and ?";
-		return null;
+		params.add(start);
+		params.add(count);
+		categorys = jdbc.queryPreparedStatement(sql, params, Category.class);
+		return categorys;
 	}
 }
 

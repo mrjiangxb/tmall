@@ -88,7 +88,7 @@ public class JdbcUtil {
 			
 			rs = pstm.executeQuery();
 			
-			ResultSetMetaData rsmd = rs.getMetaData();
+			ResultSetMetaData rsmd = rs.getMetaData();//获取每列的名字
 			//获取列的数量
 			int count = rsmd.getColumnCount();
 			//存储所有列的名字
@@ -104,9 +104,9 @@ public class JdbcUtil {
 				for(int i=0;i<count;i++){
 					String name = column.get(i).toLowerCase();
 					
-					//根据列明获取属性
+					//根据列名获取属性
 					Field f = clazz.getDeclaredField(name);
-					f.setAccessible(true);
+					f.setAccessible(true);//设置后可访问私有
 					//获取属性的类型
 					String type = f.getType().getName();
 					if("int".equals(type) || "java.lang.Integer".equals(type)){
@@ -128,23 +128,14 @@ public class JdbcUtil {
 						boolean val = rs.getBoolean(name);
 						f.set(obj, val);
 					}
-					
 				}
-				
 				result.add(obj);
-				
-				
 			}
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		return result;
 	}
-	
 	
 	
 	public void close(){
