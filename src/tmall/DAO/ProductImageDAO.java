@@ -17,7 +17,7 @@ public class ProductImageDAO {
 	JdbcUtil jdbc;
 	String sql;
 	ResultSet rs;
-	 ProductImage bean = new ProductImage();
+	ProductImage bean = new ProductImage();
 	List<Object> params = new ArrayList<Object>();
 	List<ProductImage> beans = new ArrayList<ProductImage>();
 	
@@ -90,7 +90,7 @@ public class ProductImageDAO {
 	
 	//查询指定产品下，某种类型的ProductImage
 	public List<ProductImage> list(Product p, int start, int count){
-		sql = "select id,cid,name from (select id,cid,name,rownum as num from property where cid=? order by id desc) where num between ? and ?";
+		sql = "select id,pid from (select id,pid,rownum as num from productimage where pid=? order by id desc) where num between ? and ?";
 		params.add(p.getId());
 		params.add(start);
 		params.add(count);
@@ -98,7 +98,7 @@ public class ProductImageDAO {
 		return beans;
 	}
 	
-	public List<ProductImage> list(Product p, String type) {
+	public List<ProductImage> list(Product p) {
 	    return list(p, 0, Short.MAX_VALUE);
 	}
 }

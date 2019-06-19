@@ -74,6 +74,24 @@ public class JdbcUtil {
 		}
 	}
 	
+	public ResultSet query(String sql,List<Object> params){
+		getConnection();
+			try {
+				pstm = connection.prepareStatement(sql);
+				
+				if(params!=null){
+					for(int i=0;i<params.size();i++){
+						pstm.setObject(i+1, params.get(i));
+					}
+				}
+				return pstm.executeQuery();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return rs;
+	}
+	
+	//查询
 	public List queryPreparedStatement(String sql,List<Object> params,Class clazz){
 		getConnection();
 		List<Object> result = new ArrayList<Object>();
