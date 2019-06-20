@@ -1,11 +1,11 @@
 package tmall.DAO;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import tmall.bean.Category;
@@ -45,7 +45,7 @@ public class ProductDAO {
 			pstm.setString(2, bean.getSubTitle());
 			pstm.setFloat(3, bean.getPrice());
 			pstm.setInt(4, bean.getCategory().getId());//外键为Category主键
-			pstm.setDate(5, DateUtil.d_sd(bean.getCreateDate()));
+			pstm.setTimestamp(5, DateUtil.d_t(bean.getCreateDate()));
 			pstm.execute();
 			rs = pstm.getGeneratedKeys(); //获取自增的主键
 			if(rs.next()){
@@ -63,7 +63,7 @@ public class ProductDAO {
 		params.add(bean.getSubTitle());
 		params.add(bean.getPrice());
 		params.add(bean.getCategory().getId());
-		params.add(DateUtil.d_sd(bean.getCreateDate()));
+		params.add(DateUtil.d_t(bean.getCreateDate()));
 		params.add(bean.getId());
 		jdbc.updatePreparedStatement(sql, params);
 	}
@@ -92,7 +92,7 @@ public class ProductDAO {
                 String subTitle = rs.getString("subTitle");
                 float price = rs.getFloat("price");
                 int cid = rs.getInt("cid");
-                Date createDate = DateUtil.d_sd(rs.getTimestamp("createDate"));
+                Date createDate = DateUtil.t_d(rs.getTimestamp("createDate"));
                
                 bean.setName(name);
                 bean.setSubTitle(subTitle);
@@ -123,7 +123,7 @@ public class ProductDAO {
 				String name = rs.getString("name");
 				String subtitle = rs.getString("subtitle");
 				float price = rs.getFloat("price");
-				Date creatdate = DateUtil.d_sd(rs.getDate("creatdate"));
+				Date creatdate = DateUtil.d_t(rs.getTimestamp("creatdate"));
 				
 				bean.setId(id);
 				bean.setName(name);
@@ -157,7 +157,7 @@ public class ProductDAO {
 				String name = rs.getString("name");
 				String subtitle = rs.getString("subtitle");
 				float price = rs.getFloat("price");
-				Date creatdate = DateUtil.d_sd(rs.getDate("creatdate"));
+				Date creatdate = DateUtil.d_t(rs.getDate("creatdate"));
 				
 				bean.setId(id);
 				bean.setName(name);
@@ -187,9 +187,8 @@ public class ProductDAO {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param categorys
+	/*
+	 * 8个产品放到集合中，显示为一行
 	 */
 	public void fillByRow(List<Category> categorys){
 		int productNumEachRow = 8;
@@ -204,6 +203,55 @@ public class ProductDAO {
 			}
 			category.setProductsByRow(productsByRow);
 		}
+	}
+	
+	/*
+	 * 为产品设置评价数量
+	 */
+	public void setReviewNumber(Product product){
+		int reviewCount = new ReviewDAO.getCount(product.getId());
+		product.setReviewCount(reviewCount);
+	}
+	
+	public void setReviewNumber(List<Product> products){
+		for(Product product : products){
+			setReviewNumber(product);
+		}
+	}
+	
+	public List<Product> search(String keyword, int start, int count){
+		if(keyword==null || keyword.trim().length()==0){  //trim() 删除头尾空白符的字符串
+			return beans;
+		}
+		sql = "select id,name,subtitle,price,cid,createdate from (select id,name,subtitle,price,cid,createdate,rownum as num from product where name like ?) where num between ? and ?";
+		params.add("%"+keyword.trim()+"%");
+		params.add(start);
+		params.add(count);
+		rs = jdbc.query(keyword, params);
+		try {
+			while(rs.next()){
+				int id = rs.getInt("id");
+				int cid = rs.getInt("cid");
+				String name = rs.getString("name");
+				String subtitle = rs.getString("subtitle");
+				float price = rs.getFloat("price");
+				Date creatdate = DateUtil.d_t(rs.getDate("creatdate"));
+				
+				bean.setId(id);
+				bean.setName(name);
+				bean.setSubTitle(subtitle);
+				bean.setPrice(price);
+				bean.setCreateDate(creatdate);
+				
+				Category category = new CategoryDAO().get(cid);
+				bean.setCategory(category);
+				beans.add(bean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return beans;
+		
 	}
 }
 
