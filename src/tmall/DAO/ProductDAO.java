@@ -209,7 +209,7 @@ public class ProductDAO {
 	 * 为产品设置评价数量
 	 */
 	public void setReviewNumber(Product product){
-		int reviewCount = new ReviewDAO.getCount(product.getId());
+		int reviewCount = new ReviewDAO().getCount(product.getId());
 		product.setReviewCount(reviewCount);
 	}
 	

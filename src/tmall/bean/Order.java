@@ -17,7 +17,9 @@ public class Order {
 	private String receiver;
 	private String mobile;
 	private String userMessage;
-	private Date createDage;
+	private Date createDate;
+	private Date payDate;
+	private Date deliveryDate;
 	private Date confirmDate;
 	private Tuser user;
 	private int id;
@@ -26,6 +28,25 @@ public class Order {
 	private int totalNumber;
 	private String status;
 	
+	public Date getPayDate() {
+		return payDate;
+	}
+
+	public void setPayDate(Date payDate) {
+		this.payDate = payDate;
+	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 	public String getStatusDesc(){
 		String desc = "未知";
 		switch(status){
@@ -86,11 +107,11 @@ public class Order {
 	public void setUserMessage(String userMessage) {
 		this.userMessage = userMessage;
 	}
-	public Date getCreateDage() {
-		return createDage;
+	public Date getCreateDate() {
+		return createDate;
 	}
-	public void setCreateDage(Date createDage) {
-		this.createDage = createDage;
+	public void setCreateDage(Date createDate) {
+		this.createDate = createDate;
 	}
 	public Date getConfirmDate() {
 		return confirmDate;

@@ -19,10 +19,10 @@ public class Review {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getCreatDate() {
+	public Date getCreateDate() {
 		return creatDate;
 	}
-	public void setCreatDate(Date creatDate) {
+	public void setCreateDate(Date creatDate) {
 		this.creatDate = creatDate;
 	}
 	public Tuser getUser() {
