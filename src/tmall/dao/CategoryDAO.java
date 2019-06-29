@@ -1,4 +1,4 @@
-package tmall.DAO;
+package tmall.dao;
 
 import java.beans.Beans;
 import java.sql.Connection;

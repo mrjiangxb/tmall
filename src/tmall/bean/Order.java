@@ -3,7 +3,7 @@ package tmall.bean;
 import java.util.Date;
 import java.util.List;
 
-import tmall.DAO.OrderDAO;
+import tmall.dao.OrderDAO;
 
 /**
  * 订单

@@ -1,4 +1,4 @@
-package tmall.DAO;
+package tmall.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
