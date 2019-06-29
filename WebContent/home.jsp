@@ -27,21 +27,21 @@
 				<ul class="message-l">
 					<div class="topMessage">
 						<div class="menu-hd">
-							<a href="login.html" target="_top" class="h">亲，请登录</a>
-							<a href="register.html" target="_top">免费注册</a>
+							<a href="login.jsp" target="_top" class="h">亲，请登录</a>
+							<a href="register.jsp" target="_top">免费注册</a>
 						</div>
 					</div>
 				</ul>
 				<ul class="message-r">
 					<div class="topMessage home">
-						<div class="menu-hd"><a href="home1.html" target="_top" class="h">商城首页</a></div>
+						<div class="menu-hd"><a href="home.jsp" target="_top" class="h">商城首页</a></div>
 					</div>
 					<div class="topMessage my-shangcheng">
-						<div class="menu-hd MyShangcheng"><a href="person/index.html" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
+						<div class="menu-hd MyShangcheng"><a href="person/index.jsp" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
 					</div>
 					
 					<div class="topMessage favorite">
-						<div class="menu-hd"><a href="person/collection.html" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>我想要的</span></a></div>
+						<div class="menu-hd"><a href="person/collection.jsp" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>我想要的</span></a></div>
 				</ul>
 				</div>
 
@@ -64,8 +64,9 @@
 
 				<div class="clear"></div>
 			</div>
+			 <!--轮播 -->
 			<div class="banner">
-                      <!--轮播 -->
+                     
 						<div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
 							<ul class="am-slides">
 								<li class="banner1"><a href="introduction.html"><img src="images/ad1.jpg" /></a></li>
