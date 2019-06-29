@@ -1,4 +1,4 @@
-package tmall.DAO;
+package tmall.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -112,7 +112,7 @@ public class ProductDAO {
 	//查询分类下的产品
 	public List<Product> list(int cid, int start, int count){
 		Category category = new CategoryDAO().get(cid);//cid外键为Category主键
-		sql = "select id,name,subtitle,price,cid,createdate from (select id,name,subtitle,price,cid,createdate,rownum as num from product where cid=? order by id desc) where num between ? and ?";
+		sql = "select * from Product where cid = ? order by id desc limit ?,? ";
 		params.add(cid);
 		params.add(start);
 		params.add(count);
@@ -209,7 +209,7 @@ public class ProductDAO {
 	 * 为产品设置评价数量
 	 */
 	public void setReviewNumber(Product product){
-		int reviewCount = new ReviewDAO.getCount(product.getId());
+		int reviewCount = new ReviewDAO().getCount(product.getId());
 		product.setReviewCount(reviewCount);
 	}
 	

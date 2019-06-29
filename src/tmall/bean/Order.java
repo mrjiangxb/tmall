@@ -3,7 +3,7 @@ package tmall.bean;
 import java.util.Date;
 import java.util.List;
 
-import tmall.DAO.OrderDAO;
+import tmall.dao.OrderDAO;
 
 /**
  * 订单
@@ -17,15 +17,36 @@ public class Order {
 	private String receiver;
 	private String mobile;
 	private String userMessage;
-	private Date createDage;
+	private Date createDate;
+	private Date payDate;
+	private Date deliveryDate;
 	private Date confirmDate;
-	private Tuser user;
+	private User user;
 	private int id;
 	private List<OrderItem> orderItems;
 	private float total;
 	private int totalNumber;
 	private String status;
 	
+	public Date getPayDate() {
+		return payDate;
+	}
+
+	public void setPayDate(Date payDate) {
+		this.payDate = payDate;
+	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 	public String getStatusDesc(){
 		String desc = "未知";
 		switch(status){
@@ -86,11 +107,11 @@ public class Order {
 	public void setUserMessage(String userMessage) {
 		this.userMessage = userMessage;
 	}
-	public Date getCreateDage() {
-		return createDage;
+	public Date getCreateDate() {
+		return createDate;
 	}
-	public void setCreateDage(Date createDage) {
-		this.createDage = createDage;
+	public void setCreateDage(Date createDate) {
+		this.createDate = createDate;
 	}
 	public Date getConfirmDate() {
 		return confirmDate;
@@ -98,10 +119,10 @@ public class Order {
 	public void setConfirmDate(Date confirmDate) {
 		this.confirmDate = confirmDate;
 	}
-	public Tuser getUser() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser(Tuser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	public int getId() {

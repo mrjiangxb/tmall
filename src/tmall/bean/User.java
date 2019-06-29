@@ -4,7 +4,7 @@ package tmall.bean;
  * @author Administrator
  *
  */
-public class Tuser {
+public class User {
 	private String password;
 	private String name;
 	private int id;

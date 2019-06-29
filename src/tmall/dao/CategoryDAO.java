@@ -1,4 +1,4 @@
-package tmall.DAO;
+package tmall.dao;
 
 import java.beans.Beans;
 import java.sql.Connection;
@@ -100,7 +100,7 @@ public class CategoryDAO {
 	
 	//返回Category结果集
 	public List<Category> list(int start, int count){
-		sql = "select id,name from (select id,name,rownum as num from Category order by id desc) where num between ? and ?";
+		sql = "select * from Category order by id desc limit ?,? ";
 		params.add(start);
 		params.add(count);
 		beans = jdbc.queryPreparedStatement(sql, params, Category.class);

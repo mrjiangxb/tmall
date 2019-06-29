@@ -1,4 +1,4 @@
-package tmall.DAO;
+package tmall.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,7 +90,7 @@ public class ProductImageDAO {
 	
 	//查询指定产品下，某种类型的ProductImage
 	public List<ProductImage> list(Product p, int start, int count){
-		sql = "select id,pid from (select id,pid,rownum as num from productimage where pid=? order by id desc) where num between ? and ?";
+		sql = "select * from ProductImage where pid =? order by id desc limit ?,? ";
 		params.add(p.getId());
 		params.add(start);
 		params.add(count);

@@ -10,7 +10,7 @@ import java.util.Date;
 public class Review {
 	private String content;
 	private Date creatDate;
-	private Tuser user;        //关联用户
+	private User user;        //关联用户
 	private Product product;   //关联产品
 	private int id;
 	public String getContent() {
@@ -19,16 +19,16 @@ public class Review {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getCreatDate() {
+	public Date getCreateDate() {
 		return creatDate;
 	}
-	public void setCreatDate(Date creatDate) {
+	public void setCreateDate(Date creatDate) {
 		this.creatDate = creatDate;
 	}
-	public Tuser getUser() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser(Tuser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	public Product getProduct() {

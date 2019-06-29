@@ -9,7 +9,7 @@ public class OrderItem {
 	private int number;
 	private Product product;
 	private Order order;
-	private Tuser user;
+	private User user;
 	public int getId() {
 		return id;
 	}
@@ -34,10 +34,10 @@ public class OrderItem {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
-	public Tuser getUser() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser(Tuser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	

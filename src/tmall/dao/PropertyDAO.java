@@ -1,4 +1,4 @@
-package tmall.DAO;
+package tmall.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import tmall.bean.Category;
 import tmall.bean.Property;
-import tmall.bean.Tuser;
+import tmall.bean.User;
 import tmall.util.JdbcUtil;
 
 public class PropertyDAO {
@@ -100,7 +100,7 @@ public class PropertyDAO {
 	
 	//查询某个分类下的的属性对象
 	public List<Property> list(int cid, int start, int count){
-		sql = "select id,cid,name from (select id,cid,name,rownum as num from property where cid=? order by id desc) where num between ? and ?";
+		sql = "select * from Property where cid = ? order by id desc limit ?,? ";
 		params.add(cid);
 		params.add(start);
 		params.add(count);
