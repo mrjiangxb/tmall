@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import tmall.bean.Order;
-import tmall.bean.Tuser;
+import tmall.bean.User;
 import tmall.util.DateUtil;
 import tmall.util.JdbcUtil;
 
@@ -52,7 +52,7 @@ public class OrderDAO {
 	}
 	
 	public void update(Order bean){
-		sql = "update order_ set ordercode= ?, address=?, post=?,receiver=?,mobile=? ,userMessage = ? , createDate =? , payDate =?, deliveryDate = ? , confirmDate =?, tuid=?, status=? where id = ?";
+		sql = "update order_ set ordercode= ?, address=?, post=?,receiver=?,mobile=? ,userMessage = ? , createDate =? , payDate =?, deliveryDate = ? , confirmDate =?, uid=?, status=? where id = ?";
 		params.add(bean.getOrderCode());
 		params.add(bean.getAddress());
 		params.add(bean.getPost());
@@ -102,7 +102,7 @@ public class OrderDAO {
                 bean.setPayDate(payDate);
                 bean.setDeliveryDate(deliveryDate);
                 bean.setConfirmDate(confirmDate);
-                Tuser user = new TuserDAO().get(uid);
+                User user = new UserDAO().get(uid);
                 bean.setUser(user);
                 bean.setStatus(status);
                  
@@ -115,7 +115,7 @@ public class OrderDAO {
 	}
 	
 	public List<Order> list(int start, int count){
-		sql = "select * from (select id,ordercode,address,post,receiver,mobile,usermessage,createdate,paydate,deliverydate,confirmdate,tuid,status,rownum as num from order_ order by id desc) where num between ? and ?";
+		sql = "select * from Order_ order by id desc limit ?,? ";
 		params.add(start);
 		params.add(count);
 		rs = jdbc.query(sql, params);
@@ -128,7 +128,7 @@ public class OrderDAO {
                 String mobile = rs.getString("mobile");
                 String userMessage = rs.getString("userMessage");
                 String status = rs.getString("status");
-                int tuid =rs.getInt("tuid");
+                int uid =rs.getInt("uid");
                 Date createDate = DateUtil.t_d( rs.getTimestamp("createDate"));
                 Date payDate = DateUtil.t_d( rs.getTimestamp("payDate"));
                 Date deliveryDate = DateUtil.t_d( rs.getTimestamp("deliveryDate"));
@@ -145,7 +145,7 @@ public class OrderDAO {
                 bean.setPayDate(payDate);
                 bean.setDeliveryDate(deliveryDate);
                 bean.setConfirmDate(confirmDate);
-                Tuser tuser = new TuserDAO().get(tuid);
+                User tuser = new UserDAO().get(uid);
                 bean.setUser(tuser);
                 bean.setStatus(status);
                 
@@ -162,9 +162,9 @@ public class OrderDAO {
 	    return list(0, Short.MAX_VALUE);
 	}
 	
-	public List<Order> list(int tuid, String excludeStatus, int start, int count){
-		sql = "select * from (select id,ordercode,address,post,receiver,mobile,usermessage,createdate,paydate,deliverydate,confirmdate,tuid,status,rownum as num from order_ where tuid = ? and status != ? order by id desc) where num between ? and ?";
-		params.add(tuid);
+	public List<Order> list(int uid, String excludeStatus, int start, int count){
+		sql = "select * from (select id,ordercode,address,post,receiver,mobile,usermessage,createdate,paydate,deliverydate,confirmdate,uid,status,rownum as num from order_ where uid = ? and status != ? order by id desc) where num between ? and ?";
+		params.add(uid);
 		params.add(excludeStatus);
 		params.add(start);
 		params.add(count);
@@ -194,7 +194,7 @@ public class OrderDAO {
                 bean.setPayDate(payDate);
                 bean.setDeliveryDate(deliveryDate);
                 bean.setConfirmDate(confirmDate);
-                Tuser tuser = new TuserDAO().get(tuid);
+                User tuser = new UserDAO().get(uid);
                 bean.setUser(tuser);
                 bean.setStatus(status);
                 

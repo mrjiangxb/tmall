@@ -112,7 +112,7 @@ public class ProductDAO {
 	//查询分类下的产品
 	public List<Product> list(int cid, int start, int count){
 		Category category = new CategoryDAO().get(cid);//cid外键为Category主键
-		sql = "select id,name,subtitle,price,cid,createdate from (select id,name,subtitle,price,cid,createdate,rownum as num from product where cid=? order by id desc) where num between ? and ?";
+		sql = "select * from Product where cid = ? order by id desc limit ?,? ";
 		params.add(cid);
 		params.add(start);
 		params.add(count);

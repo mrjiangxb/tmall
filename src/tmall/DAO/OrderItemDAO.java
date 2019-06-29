@@ -10,7 +10,7 @@ import java.util.List;
 import tmall.bean.Order;
 import tmall.bean.OrderItem;
 import tmall.bean.Product;
-import tmall.bean.Tuser;
+import tmall.bean.User;
 import tmall.util.JdbcUtil;
 
 public class OrderItemDAO {
@@ -63,7 +63,7 @@ public class OrderItemDAO {
 	}
 	
 	public void update(OrderItem bean){
-		sql = "update orderitem set pid= ?, oid=?, tuid=? where id = ?";
+		sql = "update orderitem set pid= ?, oid=?, uid=? where id = ?";
 		params.add(bean.getProduct().getId());
 		params.add(bean.getOrder().getId());
 		params.add(bean.getUser().getId());
@@ -83,9 +83,9 @@ public class OrderItemDAO {
 			if(rs.next()){
 				int pid = bean.getProduct().getId();
 				int oid = bean.getOrder().getId();
-				int tuid = bean.getUser().getId();
+				int uid = bean.getUser().getId();
 				Product product = new ProductDAO().get(pid);
-				Tuser user = new TuserDAO().get(tuid);
+				User user = new UserDAO().get(uid);
 				
 				bean.setId(id);
 				bean.setProduct(product);
@@ -101,9 +101,9 @@ public class OrderItemDAO {
 		return bean;
 	}
 	
-	public List<OrderItem> listByUser(int tuid, int start, int count){
-		sql = "select * from (select id, pid, oid, tuid, rownum num from orderitem  where tuid = ? and oid = -1 order by id desc) where num between ? and ?";
-		params.add(tuid);
+	public List<OrderItem> listByUser(int uid, int start, int count){
+		sql = "select * from OrderItem where oid = ? order by id desc limit ?,? ";
+		params.add(uid);
 		params.add(start);
 		params.add(count);
 		rs = jdbc.query(sql, params);
@@ -113,7 +113,7 @@ public class OrderItemDAO {
                 int pid = rs.getInt("pid");
                 int oid = rs.getInt("oid");
                 Product product = new ProductDAO().get(pid);
-                Tuser user = new TuserDAO().get(tuid);
+                User user = new UserDAO().get(uid);
                 if(oid != -1){
                     Order order= new OrderDAO().get(oid);
                     bean.setOrder(order);                  
@@ -134,7 +134,7 @@ public class OrderItemDAO {
     }
 	
 	 public List<OrderItem> listByOrder(int oid, int start, int count){
-		 sql = "select * from (select id, pid, oid, tuid, rownum num from orderitem  where oid = ? order by id desc) where num between ? and ?";
+		 sql = "select * from (select id, pid, oid, uid, rownum num from orderitem  where oid = ? order by id desc) where num between ? and ?";
 			params.add(oid);
 			params.add(start);
 			params.add(count);
@@ -143,9 +143,9 @@ public class OrderItemDAO {
 				while(rs.next()){
 					int id = rs.getInt(1);
 	                int pid = rs.getInt("pid");
-	                int tuid = rs.getInt("tuid");
+	                int uid = rs.getInt("uid");
 	                Product product = new ProductDAO().get(pid);
-	                Tuser user = new TuserDAO().get(tuid);
+	                User user = new UserDAO().get(uid);
 	                if(oid != -1){
 	                    Order order= new OrderDAO().get(oid);
 	                    bean.setOrder(order);                  
@@ -199,7 +199,7 @@ public class OrderItemDAO {
     }
 	
 	 public List<OrderItem> listByProduct(int pid, int start, int count){
-		 sql = "select * from (select id, pid, oid, tuid, rownum num from orderitem  where pid = ? order by id desc) where num between ? and ?";
+		 sql = "select * from (select id, pid, oid, uid, rownum num from orderitem  where pid = ? order by id desc) where num between ? and ?";
 			params.add(pid);
 			params.add(start);
 			params.add(count);
@@ -208,9 +208,9 @@ public class OrderItemDAO {
 				while(rs.next()){
 					int id = rs.getInt(1);
 	                int oid = rs.getInt("oid");
-	                int tuid = rs.getInt("tuid");
+	                int uid = rs.getInt("uid");
 	                Product product = new ProductDAO().get(pid);
-	                Tuser user = new TuserDAO().get(tuid);
+	                User user = new UserDAO().get(uid);
 	                if(oid != -1){
 	                    Order order= new OrderDAO().get(oid);
 	                    bean.setOrder(order);                  

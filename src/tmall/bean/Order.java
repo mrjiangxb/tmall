@@ -21,7 +21,7 @@ public class Order {
 	private Date payDate;
 	private Date deliveryDate;
 	private Date confirmDate;
-	private Tuser user;
+	private User user;
 	private int id;
 	private List<OrderItem> orderItems;
 	private float total;
@@ -119,10 +119,10 @@ public class Order {
 	public void setConfirmDate(Date confirmDate) {
 		this.confirmDate = confirmDate;
 	}
-	public Tuser getUser() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser(Tuser user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	public int getId() {

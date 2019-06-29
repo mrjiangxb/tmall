@@ -10,7 +10,7 @@ import java.util.List;
 
 import tmall.bean.Product;
 import tmall.bean.Review;
-import tmall.bean.Tuser;
+import tmall.bean.User;
 import tmall.util.DateUtil;
 import tmall.util.JdbcUtil;
 
@@ -57,7 +57,7 @@ public class ReviewDAO {
 	}
 	
 	public void update(Review bean){
-		sql = "update review set content=?, tuid=?, pid=?, createdate=? where id=?";
+		sql = "update review set content=?, uid=?, pid=?, createdate=? where id=?";
 		params.add(bean.getContent());
 		params.add(bean.getUser().getId());
 		params.add(bean.getProduct().getId());
@@ -77,10 +77,10 @@ public class ReviewDAO {
 		try {
 			while(rs.next()){
 				String content = rs.getString("content");
-				int tuid = rs.getInt("tuid");
+				int uid = rs.getInt("uid");
 				int pid = rs.getInt("pid");
 				Date createdate = DateUtil.t_d(rs.getTimestamp("createdate"));
-				Tuser user = new TuserDAO().get(tuid);
+				User user = new UserDAO().get(uid);
 				Product product = new ProductDAO().get(pid);
 				
 				bean.setId(id);
@@ -109,7 +109,7 @@ public class ReviewDAO {
 	}
 	
 	public List<Review> list(int pid, int start, int count){
-		sql = "select id,content,tuid,pid,createdate from(select id,content,tuid,pid,createdate,rownum as num from review where pid=? order by id desc) where num between ? and ?";
+		sql = "select * from Review where pid = ? order by id desc limit ?,? ";
 		params.add(pid);
 		params.add(start);
 		params.add(count);
@@ -118,10 +118,10 @@ public class ReviewDAO {
 			while(rs.next()){
 				int id = rs.getInt("id");
 				String content = rs.getString("content");
-				int tuid = rs.getInt("tuid");
+				int uid = rs.getInt("uid");
 				Date createdate = DateUtil.t_d(rs.getTimestamp("createdate"));
 				Product product = new ProductDAO().get(pid);
-				Tuser user = new TuserDAO().get(tuid);
+				User user = new UserDAO().get(uid);
 				
 				bean.setContent(content);
                 bean.setCreateDate(createdate);

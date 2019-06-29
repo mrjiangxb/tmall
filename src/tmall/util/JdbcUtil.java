@@ -20,15 +20,15 @@ public class JdbcUtil {
 	private Connection connection = null;
 	private PreparedStatement pstm = null;
 	private ResultSet rs=null;
-	private String url = "jdbc:oracle:thin:@localhost:1521/orcl";
-	private String username = "scott";
-	private String password = "admin";
+	private String url = "jdbc:mysql://localhost:3306/test?characterEncoding=utf8";
+	private String username = "root";
+	private String password = "root";
 	
 	
 	static{
 		//加载驱动
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Class.forName("com.mysql.jdbc.Driver");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
