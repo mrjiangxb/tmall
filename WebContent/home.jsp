@@ -37,11 +37,11 @@
 						<div class="menu-hd"><a href="home.jsp" target="_top" class="h">商城首页</a></div>
 					</div>
 					<div class="topMessage my-shangcheng">
-						<div class="menu-hd MyShangcheng"><a href="person/index.jsp" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
+						<div class="menu-hd MyShangcheng"><a href="index.jsp" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
 					</div>
 					
 					<div class="topMessage favorite">
-						<div class="menu-hd"><a href="person/collection.jsp" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>我想要的</span></a></div>
+						<div class="menu-hd"><a href="collection.jsp" target="_top"><i class="am-icon-heart am-icon-fw"></i><span>我想要的</span></a></div>
 				</ul>
 				</div>
 
@@ -69,7 +69,7 @@
                      
 						<div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
 							<ul class="am-slides">
-								<li class="banner1"><a href="introduction.html"><img src="images/ad1.jpg" /></a></li>
+								<li class="banner1"><a href="introduction.jsp"><img src="images/ad1.jpg" /></a></li>
 								<li class="banner2"><a><img src="images/ad2.jpg" /></a></li>
 								<li class="banner3"><a><img src="images/ad3.jpg" /></a></li>
 								<li class="banner4"><a><img src="images/ad4.jpg" /></a></li>
@@ -658,7 +658,7 @@
 					<!--小导航 -->
 					<div class="am-g am-g-fixed smallnav">
 						<div class="am-u-sm-3">
-							<a href="sort.html"><img src="images/navsmall.jpg" />
+							<a href="sort.jsp"><img src="images/navsmall.jpg" />
 								<div class="title">商品分类</div>
 							</a>
 						</div>
@@ -698,7 +698,7 @@
 							    
 						<div class="mod-vip">
 							<div class="m-baseinfo">
-								<a href="person/index.html">
+								<a href="index.jsp">
 									<img src="images/getAvatar.do.jpg">
 								</a>
 								<em>
@@ -707,8 +707,8 @@
 								</em>
 							</div>
 							<div class="member-logout">
-								<a class="am-btn-warning btn" href="login.html">登录</a>
-								<a class="am-btn-warning btn" href="register.html">注册</a>
+								<a class="am-btn-warning btn" href="login.jsp">登录</a>
+								<a class="am-btn-warning btn" href="register.jsp">注册</a>
 							</div>
 							<div class="member-login">
 								<a href="#"><strong>0</strong>待收货</a>
@@ -810,7 +810,7 @@
 									</div>
 <i class="am-icon-shopping-basket am-icon-md  seprate"></i>									
 								</div>
-								<a href="introduction.html"><img src="images/白夜行1.jpg " /></a>						
+								<a href="introduction.jsp"><img src="images/白夜行1.jpg " /></a>						
 						</div>
 						
 						<div class="am-u-md-2 am-u-lg-2 text-three sug">
@@ -1154,10 +1154,10 @@
 		</div>
 		<!--引导-->
 		<div class="navCir">
-			<li class="active"><a href="home1.html"><i class="am-icon-home "></i>首页</a></li>
-			<li><a href="sort.html"><i class="am-icon-list"></i>分类</a></li>
-			<li><a href="shopcart.html"><i class="am-icon-shopping-basket"></i>购物车</a></li>	
-			<li><a href="person/index.html"><i class="am-icon-user"></i>我的</a></li>					
+			<li class="active"><a href="home.jsp"><i class="am-icon-home "></i>首页</a></li>
+			<li><a href="sort.jsp"><i class="am-icon-list"></i>分类</a></li>
+			<li><a href="shopcart.jsp"><i class="am-icon-shopping-basket"></i>购物车</a></li>	
+			<li><a href="index.jsp"><i class="am-icon-user"></i>我的</a></li>					
 		</div>
 
 		<!--菜单 -->
