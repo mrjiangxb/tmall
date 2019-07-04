@@ -7,10 +7,11 @@
 <html>
 
 <head>
-	<script src="/tmall/WebContent/js/jquery/2.0.0/jquery.min.js"></script>
-	<link href="/tmall/WebContent/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
-	<script src="/tmall/WebContent/js/bootstrap/3.3.6/bootstrap.min.js"></script>
-	<link href="/tmall/WebContent/css/back/style.css" rel="stylesheet">
+	<%String path = request.getContextPath(); %>
+	<script src="<%=path %>/js/jquery/2.0.0/jquery.min.js"></script>
+	<link href="<%=path %>/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+	<script src="<%=path %>/js/bootstrap/3.3.6/bootstrap.min.js"></script>
+	<link href="<%=path %>/css/back/style.css" rel="stylesheet">
 	
 <!--  预先定义一些判断输入框的函数，方便后面使用 -->
 	
