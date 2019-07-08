@@ -823,7 +823,7 @@
 								</div>
 <i class="am-icon-shopping-basket am-icon-md  seprate"></i>								
 							</div>
-							<a href="# "><img src="images/书2.jpg" /></a>
+							<a href="introduction.jsp"><img src="images/书2.jpg" /></a>
 						</div>
 						<div class="am-u-md-2 am-u-lg-2 text-three big">
 							<div class="outer-con ">

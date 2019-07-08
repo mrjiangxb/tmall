@@ -90,12 +90,12 @@
 								</li>
 								<li>
 									<div class="tb-pic tb-s40">
-										<a href="#"><img src="images/白夜行2.jpg" mid="images/白夜行2.jpg" big="images/白夜行2.jpg"></a>
+										<a ><img src="images/白夜行2.jpg" mid="images/白夜行2.jpg" big="images/白夜行2.jpg"></a>
 									</div>
 								</li>
 								<li>
 									<div class="tb-pic tb-s40">
-										<a href="#"><img src="images/白夜行3.jpg" mid="images/白夜行3.jpg" big="images/白夜行3.jpg"></a>
+										<a ><img src="images/白夜行3.jpg" mid="images/白夜行3.jpg" big="images/白夜行3.jpg"></a>
 									</div>
 								</li>
 							</ul>
@@ -204,7 +204,7 @@
 							</li>
 							<li>
 								<div class="clearfix tb-btn tb-btn-basket theme-login">
-									<a id="LikBasket" title="加入购物车" href="#"><i></i>想要</a>
+									<a id="LikBasket" title="加入收藏" href="AddWantServlet"><i></i>想要</a>
 								</div>
 							</li>
 						</div>

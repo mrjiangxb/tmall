@@ -14,11 +14,13 @@
 					</li>
 					
 					
+					
 
 					<li class="person">
 						<a href="#">我的小窝</a>
 						<ul>
-							<li> <a href="collection.jsp">我想要的</a></li>
+						
+							<li> <a href="SearchWantServlet">我想要的</a></li>
 							<li> <a href="order.jsp">我发布的</a></li>
 							<li> <a href="comment.jsp">评价</a></li>
 						
