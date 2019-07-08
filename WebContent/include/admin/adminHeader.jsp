@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     <!-- 引入jstl -->
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix='fmt' %>   <!-- 引入jstl -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix='fmt'%>
 
 <html>
 
 <head>
-	<%String path = request.getContextPath(); %>
-	<script src="<%=path %>/js/jquery/2.0.0/jquery.min.js"></script>
-	<link href="<%=path %>/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
-	<script src="<%=path %>/js/bootstrap/3.3.6/bootstrap.min.js"></script>
-	<link href="<%=path %>/css/back/style.css" rel="stylesheet">
-	
-<!--  预先定义一些判断输入框的函数，方便后面使用 -->
-	
+<script src="js/jquery/2.0.0/jquery.min.js"></script>
+<link href="css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
+<script src="js/bootstrap/3.3.6/bootstrap.min.js"></script>
+<link href="css/back/style.css" rel="stylesheet">
+
 <script>
 function checkEmpty(id, name){
 	var value = $("#"+id).val();
@@ -56,7 +53,7 @@ function checkInt(id, name){
 	return true;
 }
 
-/* 对于删除超链接，都需要进行确认操作 */
+
 $(function(){
 	$("a").click(function(){
 		var deleteLink = $(this).attr("deleteLink");
@@ -70,7 +67,6 @@ $(function(){
 		}
 	});
 })
-</script>	
+</script>
 </head>
 <body>
-

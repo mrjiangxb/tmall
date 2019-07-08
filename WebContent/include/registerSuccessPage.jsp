@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 
 
-<div class="footer"></div>
+<div class="registerSuccessDiv">
 
-</body>
-</html>
+	<img src="img/site/registerSuccess.png"> 恭喜注册成功
+</div>

@@ -50,7 +50,6 @@ public class CategoryServlet extends BaseBackServlet {
 			    }
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		return "@admin_category_list";
@@ -75,8 +74,6 @@ public class CategoryServlet extends BaseBackServlet {
 	public String update(HttpServletRequest request, HttpServletResponse response, Page page) {
 		Map<String,String> params = new HashMap<>();
 		InputStream is = super.parseUpload(request, params);
-		
-		System.out.println(params);
 		String name= params.get("name");
 		int id = Integer.parseInt(params.get("id"));
 
@@ -117,6 +114,7 @@ public class CategoryServlet extends BaseBackServlet {
 	
 	public String list(HttpServletRequest request, HttpServletResponse response, Page page) {
 		List<Category> cs = categoryDAO.list(page.getStart(),page.getCount());
+		
 		int total = categoryDAO.getTotal();
 		page.setTotal(total);
 		

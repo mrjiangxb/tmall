@@ -9,7 +9,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,49 +20,53 @@ import tmall.bean.User;
 import tmall.dao.CategoryDAO;
 import tmall.dao.OrderItemDAO;
 
-@WebFilter("/ForeServletFilter")
-public class ForeServletFilter implements Filter {
-
-    public ForeServletFilter() {
-    }
-
+public class ForeServletFilter implements Filter{
+	
+	@Override
 	public void destroy() {
+		
 	}
 
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest request = (HttpServletRequest)req;
-		HttpServletResponse response = (HttpServletResponse)res;
-		String contextPath = request.getServletContext().getContextPath();
+	@Override
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) res;
+		String contextPath=request.getServletContext().getContextPath();
 		request.getServletContext().setAttribute("contextPath", contextPath);
 		
-		User user = (User) request.getSession().getAttribute("user");
-		int cartTotalItemNumber = 0;
-		if(user!=null){
+		User user =(User) request.getSession().getAttribute("user");
+		int cartTotalItemNumber= 0;
+		if(null!=user){
 			List<OrderItem> ois = new OrderItemDAO().listByUser(user.getId());
-			for(OrderItem oi : ois){
-				cartTotalItemNumber += oi.getNumber();
+			for (OrderItem oi : ois) {
+				cartTotalItemNumber+=oi.getNumber();
 			}
 		}
 		request.setAttribute("cartTotalItemNumber", cartTotalItemNumber);
 		
-		List<Category> cs = (List<Category>)request.getAttribute("cs");
-		if(cs!=null){
-			cs = new CategoryDAO().list();
-			request.setAttribute("cs", cs);
+		List<Category> cs=(List<Category>) request.getAttribute("cs");
+		if(null==cs){
+			cs=new CategoryDAO().list();
+			request.setAttribute("cs", cs);			
 		}
 		
 		String uri = request.getRequestURI();
-		uri = StringUtils.remove(uri, contextPath);
-		if(uri.startsWith("/fore") && !uri.startsWith("/foreServlet")){
-			String method = StringUtils.substringAfterLast(uri, "/fore");
+		uri =StringUtils.remove(uri, contextPath);
+		if(uri.startsWith("/fore")&&!uri.startsWith("/foreServlet")){
+			String method = StringUtils.substringAfterLast(uri,"/fore" );
 			request.setAttribute("method", method);
 			req.getRequestDispatcher("/foreServlet").forward(request, response);
 			return;
 		}
+		
 		chain.doFilter(request, response);
 	}
 
-	public void init(FilterConfig fConfig) throws ServletException {
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+		
 	}
-
+	
+	
 }

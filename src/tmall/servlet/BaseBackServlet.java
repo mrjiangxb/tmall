@@ -71,7 +71,6 @@ public abstract class BaseBackServlet extends HttpServlet {
 			String redirect = m.invoke(this,request, response,page).toString();
 			
 			/*根据方法的返回值，进行相应的客户端跳转，服务端跳转，或者仅仅是输出字符串*/
-			
 			if(redirect.startsWith("@"))
 				response.sendRedirect(redirect.substring(1));
 			else if(redirect.startsWith("%"))
