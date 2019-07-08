@@ -8,9 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.util.HtmlUtils;
 
 import tmall.bean.Category;
+import tmall.bean.Product;
+import tmall.bean.ProductImage;
+import tmall.bean.PropertyValue;
+import tmall.bean.Review;
 import tmall.bean.User;
 import tmall.dao.CategoryDAO;
 import tmall.dao.ProductDAO;
+import tmall.dao.ProductImageDAO;
 import tmall.util.Page;
 
 public class ForeServlet extends BaseForeServlet {
@@ -57,10 +62,49 @@ public class ForeServlet extends BaseForeServlet {
 		return "@forehome";
 	}
 	
-	
 	public String logout(HttpServletRequest request, HttpServletResponse response, Page page){
 		request.getSession().removeAttribute("user");
 		return "@forehome";
 	}
+	
+	public String product(HttpServletRequest request, HttpServletResponse response, Page page){
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		Product p = productDAO.get(pid);
+		
+		List<ProductImage> productSingleImages = productImageDAO.list(p, ProductImageDAO.type_single);
+		List<ProductImage> productDetailImages = productImageDAO.list(p, ProductImageDAO.type_detail);
+		p.setProductSingleImages(productSingleImages);
+		p.setProductDetailImages(productDetailImages);
+		
+		List<PropertyValue> pvs = propertyValueDAO.list(p.getId());
+		List<Review> reviews = reviewDAO.list(p.getId());
+		productDAO.setSaleAndReviewNumber(p);
+		
+		request.setAttribute("reviews", reviews);
+		request.setAttribute("p", p);
+		request.setAttribute("pvs", pvs);
+		
+		return "product.jsp";
+	}
+	
+	public String checkLogin(HttpServletRequest request, HttpServletResponse response, Page page){
+		User user = (User) request.getSession().getAttribute("user");
+		if(user!=null){
+			return "%fail";
+		}
+		return "%success";
+	}
+	
+	public String loginAjax(HttpServletRequest request, HttpServletResponse response, Page page){
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
+		User user = userDAO.get(name, password);
+		if(user==null){
+			return "%fail";
+		}
+		request.getSession().setAttribute("user", user);
+		return "%success";
+	}
+	
 }
 
