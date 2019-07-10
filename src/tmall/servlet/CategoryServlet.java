@@ -50,6 +50,7 @@ public class CategoryServlet extends BaseBackServlet {
 			    }
 			}
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		return "@admin_category_list";

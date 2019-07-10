@@ -1,5 +1,7 @@
 package tmall.servlet;
 
+import java.io.BufferedWriter;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,48 +41,44 @@ public class ForeServlet extends BaseForeServlet {
 		request.setAttribute("cs", cs);
 		return "home.jsp";
 	}
-	
+
 	public String register(HttpServletRequest request, HttpServletResponse response, Page page) {
-        String name = request.getParameter("name");
-        String password = request.getParameter("password");
-        name = HtmlUtils.htmlEscape(name);
-        System.out.println(name);
-        boolean exist = userDAO.isExist(name);
-         
-        if(exist){
-            request.setAttribute("msg", "用户名已经被使用,不能使用");
-            return "register.jsp"; 
-        }
-         
-        User user = new User();
-        user.setName(name);
-        user.setPassword(password);
-        System.out.println(user.getName());
-        System.out.println(user.getPassword());
-        userDAO.add(user);
-         
-        return "@registerSuccess.jsp"; 
-    }  
-	
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
+		name = HtmlUtils.htmlEscape(name);
+		System.out.println(name);
+		boolean exist = userDAO.isExist(name);
+		
+		if(exist){
+			request.setAttribute("msg", "用户名已经被使用,不能使用");
+			return "register.jsp";	
+		}
+		
+		User user = new User();
+		user.setName(name);
+		user.setPassword(password);
+		System.out.println(user.getName());
+		System.out.println(user.getPassword());
+		userDAO.add(user);
+		
+		return "@registerSuccess.jsp";	
+	}	
 	public String login(HttpServletRequest request, HttpServletResponse response, Page page) {
 		String name = request.getParameter("name");
 		name = HtmlUtils.htmlEscape(name);
-		String password = request.getParameter("password");
+		String password = request.getParameter("password");		
+		
 		User user = userDAO.get(name,password);
-		if(user==null){
+		 
+		if(null==user){
 			request.setAttribute("msg", "账号密码错误");
-			return "login.jsp";
+			return "login.jsp";	
 		}
 		request.getSession().setAttribute("user", user);
-		return "@forehome";
-	}
+		return "@forehome";	
+	}	
 	
-	public String logout(HttpServletRequest request, HttpServletResponse response, Page page){
-		request.getSession().removeAttribute("user");
-		return "@forehome";
-	}
-	
-	public String product(HttpServletRequest request, HttpServletResponse response, Page page){
+	public String product(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		Product p = productDAO.get(pid);
 		
@@ -89,85 +87,83 @@ public class ForeServlet extends BaseForeServlet {
 		p.setProductSingleImages(productSingleImages);
 		p.setProductDetailImages(productDetailImages);
 		
-		List<PropertyValue> pvs = propertyValueDAO.list(p.getId());
+		List<PropertyValue> pvs = propertyValueDAO.list(p.getId());		
+	
 		List<Review> reviews = reviewDAO.list(p.getId());
-		productDAO.setSaleAndReviewNumber(p);
 		
+		productDAO.setSaleAndReviewNumber(p);
+
 		request.setAttribute("reviews", reviews);
+
 		request.setAttribute("p", p);
 		request.setAttribute("pvs", pvs);
-		
-		return "product.jsp";
+		return "product.jsp";		
 	}
-	
-	public String checkLogin(HttpServletRequest request, HttpServletResponse response, Page page){
-		User user = (User) request.getSession().getAttribute("user");
-		if(user!=null){
-			return "%fail";
-		}
-		return "%success";
-	}
-	
-	public String loginAjax(HttpServletRequest request, HttpServletResponse response, Page page){
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-		User user = userDAO.get(name, password);
-		if(user==null){
-			return "%fail";
-		}
-		request.getSession().setAttribute("user", user);
-		return "%success";
-	}
-	
-	/*
-	 * 1. 获取参数cid
-	 * 2. 根据cid获取分类Category对象 c
-	 * 3. 为c填充产品
-	 * 4. 为产品填充销量和评价数据
-	 * 5. 获取参数sort
-	 * 	5.1 如果sort==null，不排序
-	 *  5.2 如果sort!=null，根据sort的值，从5个Comparator比较器中选择一个对应的比较器进行排序
-	 * 6. 把c放在request中
-	 * 7. 服务端跳转到 category.jsp
-	 */
-	public String category(HttpServletRequest request, HttpServletResponse response, Page page){
-		int cid = Integer.parseInt(request.getParameter("cid"));
-		Category c = new CategoryDAO().get(cid);
-		new ProductDAO().fill(c);  //为该类填充产品集合
-		new ProductDAO().setSaleAndReviewNumber(c.getProducts());
-		String sort = request.getParameter("sort");
-		if(sort!=null){
-			switch(sort){
-				case "review":
-					//根据指定比较器产生的顺序对指定列表进行排序
-					Collections.sort(c.getProducts(),new ProductReviewComparator());
-					break;
-				case "saleCount":
-					Collections.sort(c.getProducts(),new ProductSaleCountComparator());
-					break;
-				case "date":
-					Collections.sort(c.getProducts(),new ProductDateComparator());
-					break;
-				case "price":
-					Collections.sort(c.getProducts(),new ProductPriceComparator());
-					break;
-				case "all":
-					Collections.sort(c.getProducts(),new ProductAllComparator());
-					break;
-			}
-		}
-		request.setAttribute("c", c);
-		return "category.jsp";
+	public String logout(HttpServletRequest request, HttpServletResponse response, Page page) {
+		request.getSession().removeAttribute("user");
+		return "@forehome";	
 	}
 
+	public String checkLogin(HttpServletRequest request, HttpServletResponse response, Page page) {
+		User user =(User) request.getSession().getAttribute("user");
+		if(null!=user)
+			return "%success";
+		return "%fail";
+	}
+	public String loginAjax(HttpServletRequest request, HttpServletResponse response, Page page) {
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");		
+		User user = userDAO.get(name,password);
+		
+		if(null==user){
+			return "%fail";	
+		}
+		request.getSession().setAttribute("user", user);
+		return "%success";	
+	}
+	public String category(HttpServletRequest request, HttpServletResponse response, Page page) {
+		int cid = Integer.parseInt(request.getParameter("cid"));
+		
+		Category c = new CategoryDAO().get(cid);
+		new ProductDAO().fill(c);
+		new ProductDAO().setSaleAndReviewNumber(c.getProducts());		
+		
+		String sort = request.getParameter("sort");
+		if(null!=sort){
+		switch(sort){
+			case "review":
+				Collections.sort(c.getProducts(),new ProductReviewComparator());
+				break;
+			case "date" :
+				Collections.sort(c.getProducts(),new ProductDateComparator());
+				break;
+				
+			case "saleCount" :
+				Collections.sort(c.getProducts(),new ProductSaleCountComparator());
+				break;
+				
+			case "price":
+				Collections.sort(c.getProducts(),new ProductPriceComparator());
+				break;
+				
+			case "all":
+				Collections.sort(c.getProducts(),new ProductAllComparator());
+				break;
+			}
+		}
+		
+		request.setAttribute("c", c);
+		return "category.jsp";		
+	}
+	
 	public String search(HttpServletRequest request, HttpServletResponse response, Page page){
 		String keyword = request.getParameter("keyword");
-		List<Product> ps = new ProductDAO().search(keyword, 0, 20);
+		List<Product> ps= new ProductDAO().search(keyword,0,20);
 		productDAO.setSaleAndReviewNumber(ps);
-		request.setAttribute("ps", ps);
+		request.setAttribute("ps",ps);
 		return "searchResult.jsp";
-	} 
-	
+	}
+
 	public String buyone(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		int num = Integer.parseInt(request.getParameter("num"));
@@ -186,6 +182,7 @@ public class ForeServlet extends BaseForeServlet {
 				break;
 			}
 		}		
+
 		if(!found){
 			OrderItem oi = new OrderItem();
 			oi.setUser(user);
@@ -196,30 +193,32 @@ public class ForeServlet extends BaseForeServlet {
 		}
 		return "@forebuy?oiid="+oiid;
 	}
+
 	
 	public String buy(HttpServletRequest request, HttpServletResponse response, Page page){
-		String[] oiids =  request.getParameterValues("oiid");
+		String[] oiids=request.getParameterValues("oiid");
 		List<OrderItem> ois = new ArrayList<>();
 		float total = 0;
-		for(String strid : oiids){
+
+		for (String strid : oiids) {
 			int oiid = Integer.parseInt(strid);
-			OrderItem oi = orderItemDAO.get(oiid);
+			OrderItem oi= orderItemDAO.get(oiid);
 			total +=oi.getProduct().getPromotePrice()*oi.getNumber();
 			ois.add(oi);
 		}
+		
 		request.getSession().setAttribute("ois", ois);
 		request.setAttribute("total", total);
 		return "buy.jsp";
-	}
-	
-	public String addCart(HttpServletRequest request, HttpServletResponse response, Page page){
+	}	
+	public String addCart(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		Product p = productDAO.get(pid);
 		int num = Integer.parseInt(request.getParameter("num"));
 		
-		User user = (User) request.getSession().getAttribute("user");
+		User user =(User) request.getSession().getAttribute("user");
 		boolean found = false;
-		
+
 		List<OrderItem> ois = orderItemDAO.listByUser(user.getId());
 		for (OrderItem oi : ois) {
 			if(oi.getProduct().getId()==p.getId()){
@@ -229,6 +228,8 @@ public class ForeServlet extends BaseForeServlet {
 				break;
 			}
 		}		
+		
+
 		if(!found){
 			OrderItem oi = new OrderItem();
 			oi.setUser(user);
@@ -238,52 +239,53 @@ public class ForeServlet extends BaseForeServlet {
 		}
 		return "%success";
 	}
-	
-	public String cart(HttpServletRequest request, HttpServletResponse response, Page page){
-		User user = (User) request.getSession().getAttribute("user");
+	public String cart(HttpServletRequest request, HttpServletResponse response, Page page) {
+		User user =(User) request.getSession().getAttribute("user");
 		List<OrderItem> ois = orderItemDAO.listByUser(user.getId());
 		request.setAttribute("ois", ois);
 		return "cart.jsp";
 	}
-	
-	public String changeOrderItem(HttpServletRequest request, HttpServletResponse response, Page page){
-		User user = (User) request.getSession().getAttribute("user");
-		if(user==null){
+
+	public String changeOrderItem(HttpServletRequest request, HttpServletResponse response, Page page) {
+		User user =(User) request.getSession().getAttribute("user");
+		if(null==user)
 			return "%fail";
-		}
+
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		int number = Integer.parseInt(request.getParameter("number"));
 		List<OrderItem> ois = orderItemDAO.listByUser(user.getId());
-		for(OrderItem oi : ois){
+		for (OrderItem oi : ois) {
 			if(oi.getProduct().getId()==pid){
 				oi.setNumber(number);
 				orderItemDAO.update(oi);
 				break;
 			}
-		}
+			
+		}		
 		return "%success";
 	}
-	
+
 	public String deleteOrderItem(HttpServletRequest request, HttpServletResponse response, Page page){
-		User user = (User) request.getSession().getAttribute("user");
-		if(user==null){
+		User user =(User) request.getSession().getAttribute("user");
+		if(null==user)
 			return "%fail";
-		}
 		int oiid = Integer.parseInt(request.getParameter("oiid"));
 		orderItemDAO.delete(oiid);
 		return "%success";
 	}
-	
+
 	public String createOrder(HttpServletRequest request, HttpServletResponse response, Page page){
-		User user = (User) request.getSession().getAttribute("user");
-		
+		User user =(User) request.getSession().getAttribute("user");
+
+	
 		String address = request.getParameter("address");
 		String post = request.getParameter("post");
 		String receiver = request.getParameter("receiver");
 		String mobile = request.getParameter("mobile");
 		String userMessage = request.getParameter("userMessage");
 		
-		String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date())+RandomUtils.nextInt(10000);
+		
+		String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) +RandomUtils.nextInt(10000);
 		Order order = new Order();
 		order.setOrderCode(orderCode);
 		order.setAddress(address);
@@ -294,22 +296,24 @@ public class ForeServlet extends BaseForeServlet {
 		order.setCreateDate(new Date());
 		order.setUser(user);
 		order.setStatus(OrderDAO.waitPay);
+
 		orderDAO.add(order);
-		
-		List<OrderItem> ois = (List<OrderItem>) request.getSession().getAttribute("ois");
-		float total = 0;
-		for(OrderItem oi : ois){
+
+		List<OrderItem> ois= (List<OrderItem>) request.getSession().getAttribute("ois");		
+		float total =0;
+		for (OrderItem oi: ois) {
 			oi.setOrder(order);
 			orderItemDAO.update(oi);
-			total +=oi.getProduct().getPromotePrice()*oi.getNumber();
+			total+=oi.getProduct().getPromotePrice()*oi.getNumber();
 		}
-		return "@forealipay?oid="+order.getId()+"&total="+total;
+		
+		return "@forealipay?oid="+order.getId() +"&total="+total;
 	}
 	
 	public String alipay(HttpServletRequest request, HttpServletResponse response, Page page){
 		return "alipay.jsp";
 	}
-	
+
 	public String payed(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int oid = Integer.parseInt(request.getParameter("oid"));
 		Order order = orderDAO.get(oid);
@@ -318,8 +322,8 @@ public class ForeServlet extends BaseForeServlet {
 		new OrderDAO().update(order);
 		request.setAttribute("o", order);
 		return "payed.jsp";		
-	}
-	
+	}	
+
 	public String bought(HttpServletRequest request, HttpServletResponse response, Page page) {
 		User user =(User) request.getSession().getAttribute("user");
 		List<Order> os= orderDAO.list(user.getId(),OrderDAO.delete);
@@ -330,25 +334,32 @@ public class ForeServlet extends BaseForeServlet {
 		
 		return "bought.jsp";		
 	}
-	
-	public String confirmPay(HttpServletRequest request, HttpServletResponse response, Page page){
+	public String confirmPay(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int oid = Integer.parseInt(request.getParameter("oid"));
 		Order o = orderDAO.get(oid);
 		orderItemDAO.fill(o);
 		request.setAttribute("o", o);
-		return "confirmPay.jsp";
+		return "confirmPay.jsp";		
 	}
 	
-	public String orderConfirmed(HttpServletRequest request, HttpServletResponse response, Page page){
+	public String orderConfirmed(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int oid = Integer.parseInt(request.getParameter("oid"));
 		Order o = orderDAO.get(oid);
-		o.setStatus(orderDAO.waitReview);
+		o.setStatus(OrderDAO.waitReview);
 		o.setConfirmDate(new Date());
 		orderDAO.update(o);
 		return "orderConfirmed.jsp";
-	}
+	}	
 	
-	public String review(HttpServletRequest request, HttpServletResponse response, Page page){
+	
+	public String deleteOrder(HttpServletRequest request, HttpServletResponse response, Page page){
+		int oid = Integer.parseInt(request.getParameter("oid"));
+		Order o = orderDAO.get(oid);
+		o.setStatus(OrderDAO.delete);
+		orderDAO.update(o);
+		return "%success";		
+	}
+	public String review(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int oid = Integer.parseInt(request.getParameter("oid"));
 		Order o = orderDAO.get(oid);
 		orderItemDAO.fill(o);
@@ -358,29 +369,29 @@ public class ForeServlet extends BaseForeServlet {
 		request.setAttribute("p", p);
 		request.setAttribute("o", o);
 		request.setAttribute("reviews", reviews);
-		return "review.jsp";
+		return "review.jsp";		
 	}
-	
-	public String doreview(HttpServletRequest request, HttpServletResponse response, Page page){
+	public String doreview(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int oid = Integer.parseInt(request.getParameter("oid"));
 		Order o = orderDAO.get(oid);
-		return "@forereview?oid="+oid+"&showonly=true";
+		o.setStatus(OrderDAO.finish);
+		orderDAO.update(o);
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		Product p = productDAO.get(pid);
+		
+		String content = request.getParameter("content");
+		
+		content = HtmlUtils.htmlEscape(content);
+
+		User user =(User) request.getSession().getAttribute("user");
+		Review review = new Review();
+		review.setContent(content);
+		review.setProduct(p);
+		review.setCreateDate(new Date());
+		review.setUser(user);
+		reviewDAO.add(review);
+		
+		return "@forereview?oid="+oid+"&showonly=true";		
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

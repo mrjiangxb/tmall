@@ -97,8 +97,6 @@ public class ProductImageServlet extends BaseBackServlet {
 
 
 
-
-
 	public String delete(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int id = Integer.parseInt(request.getParameter("id"));
 		ProductImage pi = productImageDAO.get(id);
