@@ -60,7 +60,7 @@
 						<td>${p.id}</td>
 						<td><c:if test="${!empty p.firstProductImage}">
 								<img width="40px"
-									src="img/productSingle/${p.firstProductImage.id}.jpg">
+									src="http://localhost:8080/tmall/admin_category_showSingleImg?id=${p.firstProductImage.id}">
 							</c:if></td>
 						<td>${p.name}</td>
 						<td>${p.subTitle}</td>

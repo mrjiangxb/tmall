@@ -59,7 +59,6 @@ public class ForeServletFilter implements Filter{
 			req.getRequestDispatcher("/foreServlet").forward(request, response);
 			return;
 		}
-		
 		chain.doFilter(request, response);
 	}
 

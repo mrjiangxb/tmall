@@ -2,9 +2,12 @@ package tmall.servlet;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,8 @@ import tmall.util.ImageUtil;
 import tmall.util.Page;
 
 public class ProductImageServlet extends BaseBackServlet {
+	
+	
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
 		//上传文件的输入流
 		InputStream is = null;
@@ -46,14 +51,14 @@ public class ProductImageServlet extends BaseBackServlet {
         String imageFolder_small=null;
         String imageFolder_middle=null;
         if(ProductImageDAO.type_single.equals(pi.getType())){
-        	imageFolder= request.getSession().getServletContext().getRealPath("img/productSingle");
-        	imageFolder_small= request.getSession().getServletContext().getRealPath("img/productSingle_small");
-        	imageFolder_middle= request.getSession().getServletContext().getRealPath("img/productSingle_middle");
+        	imageFolder= "E:/project/img/productSingle";
+        	imageFolder_small= "E:/project/img/productSingle_small";
+        	imageFolder_middle= "E:/project/img/productSingle_middle";
         }
         	
         
         else
-        	imageFolder= request.getSession().getServletContext().getRealPath("img/productDetail");
+        	imageFolder= "E:/project/img/productDetail";
         File f = new File(imageFolder, fileName);
         f.getParentFile().mkdirs();
         

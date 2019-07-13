@@ -240,7 +240,7 @@ function syncPrice(pid,num,price){
 						<td>
 							<img selectit="false" oiid="${oi.id}" class="cartProductItemIfSelected" src="img/site/cartNotSelected.png">
 							<a style="display:none" href="#nowhere"><img src="img/site/cartSelected.png"></a>
-							<img class="cartProductImg"  src="img/productSingle_middle/${oi.product.firstProductImage.id}.jpg">
+							<img class="cartProductImg"  src="http://localhost:8080/tmall/admin_category_showMiddleImg?id=${oi.product.firstProductImage.id}">
 						</td>
 						<td>
 							<div class="cartProductLinkOutDiv">

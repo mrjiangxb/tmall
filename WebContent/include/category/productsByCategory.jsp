@@ -16,8 +16,8 @@
 		<c:if test="${stc.count<=categorycount}">
 		<div class="productUnit" price="${p.promotePrice}">
 			<div class="productUnitFrame">
-				<a href="foreproduct?pid=${p.id}">
-					<img class="productImage" src="img/productSingle_middle/${p.firstProductImage.id}.jpg">
+				<a href="foreproduct?pid=${p.id}"> 
+					<img class="productImage" src="http://localhost:8080/tmall/admin_category_showMiddleImg?id=${p.firstProductImage.id}">
 				</a>
 				<span class="productPrice">¥<fmt:formatNumber type="number" value="${p.promotePrice}" minFractionDigits="2"/></span>
 				<a class="productLink" href="foreproduct?pid=${p.id}">

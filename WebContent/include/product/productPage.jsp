@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 
 <title>模仿天猫官网 ${p.name}</title>
-<div class="categoryPictureInProductPageDiv">
-	<img class="categoryPictureInProductPage" src="img/category/${p.category.id}.jpg">
+<div class="categoryPictureInProductPageDiv">    
+	<img class="categoryPictureInProductPage" src="http://localhost:8080/tmall/admin_category_showCategoryImg?id=${p.category.id}">
 </div>
 
 <div class="productPageDiv">

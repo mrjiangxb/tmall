@@ -6,8 +6,8 @@
 	
 	<c:forEach items="${ps}" var="p">
 		<div class="productUnit" price="${p.promotePrice}">
-			<a href="foreproduct?pid=${p.id}">
-				<img class="productImage" src="img/productSingle/${p.firstProductImage.id}.jpg">
+			<a href="foreproduct?pid=${p.id}">    
+				<img class="productImage" src="http://localhost:8080/tmall/admin_category_showSingleImg?id=${p.firstProductImage.id}">
 			</a>
 			<span class="productPrice">¥<fmt:formatNumber type="number" value="${p.promotePrice}" minFractionDigits="2"/></span>
 			<a class="productLink" href="foreproduct?pid=${p.id}">

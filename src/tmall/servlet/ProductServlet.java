@@ -1,5 +1,9 @@
 package tmall.servlet;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +15,7 @@ import tmall.util.Page;
 
 public class ProductServlet extends BaseBackServlet {
 
+	
 	
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int cid = Integer.parseInt(request.getParameter("cid"));

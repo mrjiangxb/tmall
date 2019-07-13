@@ -19,8 +19,9 @@ $(function(){
 			<div class="row show1">
 				<c:forEach items="${ps}" var="p">
 					<c:if test="${!empty p.subTitle}">
-						<a href="foreproduct?pid=${p.id}"> <c:forEach
-								items="${fn:split(p.subTitle, ' ')}" var="title" varStatus="st">
+						<a href="foreproduct?pid=${p.id}"> 
+							<c:forEach
+								items="${fn:split(p.subTitle, ' ')}" var="title" varStatus="st">  <!-- 取出subTitle的第一个词条 -->
 								<c:if test="${st.index==0}">
 									${title}
 								</c:if>

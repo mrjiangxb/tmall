@@ -1,6 +1,10 @@
 package tmall.servlet;
 
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +38,9 @@ import tmall.dao.ProductImageDAO;
 import tmall.util.Page;
 
 public class ForeServlet extends BaseForeServlet {
+	
+	
+	
 	public String home(HttpServletRequest request, HttpServletResponse response, Page page) {
 		List<Category> cs= new CategoryDAO().list();
 		new ProductDAO().fill(cs);
