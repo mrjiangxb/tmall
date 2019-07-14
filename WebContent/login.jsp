@@ -2,13 +2,8 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 
 <%@include file="include/header.jsp"%>
-
 <%@include file="include/top.jsp"%>
 
-
-
 <%@include file="include/loginPage.jsp"%>
-
-
 
 <%@include file="include/footer.jsp"%>

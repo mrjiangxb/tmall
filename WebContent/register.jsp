@@ -6,7 +6,7 @@
 <%@include file="include/top.jsp"%>
 <%@include file="include/simpleSearch.jsp"%>
 
-
+<!-- 实现业务的页面 -->
 <%@include file="include/registerPage.jsp"%>
 
 

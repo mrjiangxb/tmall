@@ -30,10 +30,11 @@ public class BackServletFilter implements Filter {
 		String uri = request.getRequestURI();
 		uri =StringUtils.remove(uri, contextPath);
 		if(uri.startsWith("/admin_")){		
-			String servletPath = StringUtils.substringBetween(uri,"_", "_") + "Servlet";
+			String servletPath = StringUtils.substringBetween(uri,"_", "_") + "Servlet"; 
 			String method = StringUtils.substringAfterLast(uri,"_" );
 			request.setAttribute("method", method);
-			req.getRequestDispatcher("/" + servletPath).forward(request, response);
+			//跳转到servletPath指定的servlet
+			req.getRequestDispatcher("/" + servletPath).forward(request, response); 
 			return;
 		}
 		

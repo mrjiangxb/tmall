@@ -81,6 +81,9 @@ public class ForeServlet extends BaseForeServlet {
 			request.setAttribute("msg", "账号密码错误");
 			return "login.jsp";	
 		}
+		/*设置一个session() 访问需要用户信息的页面时会判断session中的user是否为空
+		 * 为空则需要跳转登录页面，或者利用Ajax弹出登录窗口进行登录
+		 */
 		request.getSession().setAttribute("user", user);
 		return "@forehome";	
 	}	
@@ -174,23 +177,21 @@ public class ForeServlet extends BaseForeServlet {
 	public String buyone(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		int num = Integer.parseInt(request.getParameter("num"));
-		Product p = productDAO.get(pid);
+		Product p = productDAO.get(pid); //根据pid得到Product对象
 		int oiid = 0;
-		
-		User user =(User) request.getSession().getAttribute("user");
+		User user =(User) request.getSession().getAttribute("user"); //得到当前用户
 		boolean found = false;
-		List<OrderItem> ois = orderItemDAO.listByUser(user.getId());
-		for (OrderItem oi : ois) {
-			if(oi.getProduct().getId()==p.getId()){
-				oi.setNumber(oi.getNumber()+num);
+		List<OrderItem> ois = orderItemDAO.listByUser(user.getId()); //得到该用户下的所有订单项
+		for (OrderItem oi : ois) {                    //遍历所有订单项     
+			if(oi.getProduct().getId()==p.getId()){	  //如果有一个订单项的产品id=要购买的产品id
+				oi.setNumber(oi.getNumber()+num);     //设置该订单项的产品数量
 				orderItemDAO.update(oi);
 				found = true;
-				oiid = oi.getId();
-				break;
+				oiid = oi.getId();                    //获取订单项id
+				break;                                
 			}
 		}		
-
-		if(!found){
+		if(!found){     //如果没有，创建一个新的订单项
 			OrderItem oi = new OrderItem();
 			oi.setUser(user);
 			oi.setNumber(num);
@@ -284,13 +285,11 @@ public class ForeServlet extends BaseForeServlet {
 	public String createOrder(HttpServletRequest request, HttpServletResponse response, Page page){
 		User user =(User) request.getSession().getAttribute("user");
 
-	
 		String address = request.getParameter("address");
 		String post = request.getParameter("post");
 		String receiver = request.getParameter("receiver");
 		String mobile = request.getParameter("mobile");
 		String userMessage = request.getParameter("userMessage");
-		
 		
 		String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) +RandomUtils.nextInt(10000);
 		Order order = new Order();

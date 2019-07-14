@@ -83,7 +83,7 @@
 						
 						</td>
 						<td>
-						
+						                                             <!-- 格式化数字 -->                                             <!-- 小数点后最少两位 -->
 						<span class="orderItemProductPrice">￥<fmt:formatNumber type="number" value="${oi.product.promotePrice}" minFractionDigits="2"/></span>
 						</td>
 						<td>

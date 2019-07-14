@@ -69,13 +69,14 @@ $(function(){
 	$(".buyLink").click(function(){   /* 监听购买按钮 */
 		var page = "forecheckLogin";
 		$.get(
-	            page,
-	            function(result){
-	            	if("success"==result){
+	            page,               /* 请求路径 */
+	            function(result){   /* 请求成功后执行该函数 */
+	            	if("success"==result){   
 	            		var num = $(".productNumberSetting").val();
+	            		/*本页面跳转                            .buyLink  类的href属性加上           数量                     */
 	            		location.href= $(".buyLink").attr("href")+"&num="+num;
 	            	}
-	            	else{
+	            	else{   /* 登录不成功，弹出模态窗口 */
 						$("#loginModal").modal('show');	            		
 	            	}
 	            }
@@ -90,12 +91,11 @@ $(function(){
 		if(0==name.length||0==password.length){
 			$("span.errorMessage").html("请输入账号密码");
 			$("div.loginErrorMessageDiv").show();			
-			return false;
+			return false; /* 此处return false 否则将会提交表单  */
 		}
-		
 		var page = "foreloginAjax";
 		$.get(
-	            page,
+	            page,  /* 请求路径     需要调用ForeServlet中的loginAjax() */
 	            {"name":name,"password":password},
 	            function(result){
 	            	if("success"==result){
@@ -107,7 +107,6 @@ $(function(){
 	            	}
 	            }
 		);			
-		
 		return true;
 	});
 	
@@ -231,4 +230,21 @@ $(function(){
 	<div style="clear:both"></div>
 	
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -69,12 +69,15 @@ public abstract class BaseBackServlet extends HttpServlet {
 					javax.servlet.http.HttpServletResponse.class,Page.class);
 			String redirect = m.invoke(this,request, response,page).toString();
 			
-			/*根据方法的返回值，进行相应的客户端跳转，服务端跳转，或者仅仅是输出字符串*/
+			/*根据方法的返回值，进行相应的客户端跳转，服务端跳转，或者仅输出字符串*/
 			if(redirect.startsWith("@"))
-				response.sendRedirect(redirect.substring(1));
-			else if(redirect.startsWith("%"))
+				//@开头    客户端跳转 重定向，页面信息丢失
+				response.sendRedirect(redirect.substring(1));  
+			else if(redirect.startsWith("%"))          
+				//%开头    输出字符串
 				response.getWriter().print(redirect.substring(1));
 			else
+				//服务端跳转     请求转发，保留页面信息 Attribute  parameter等
 				request.getRequestDispatcher(redirect).forward(request, response);
 			
 		} catch (Exception e) {
