@@ -70,7 +70,7 @@
 			<tbody class="productListTableTbody">
 				<c:forEach items="${ois}" var="oi" varStatus="st" >
 					<tr class="orderItemTR">										
-						<td class="orderItemFirstTD"><img class="orderItemImg" src="http://localhost:8080/tmall/admin_category_showMiddleImg?id=${oi.product.firstProductImage.id}"></td>
+						<td class="orderItemFirstTD"><img class="orderItemImg" src="/img/productSingle_middle/${oi.product.firstProductImage.id}.jpg"></td>
 						<td class="orderItemProductInfo">
 						<a  href="foreproduct?pid=${oi.product.id}" class="orderItemProductLink">
 							${oi.product.name}

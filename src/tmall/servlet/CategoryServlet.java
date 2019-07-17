@@ -24,7 +24,7 @@ import tmall.util.Page;
 
 public class CategoryServlet extends BaseBackServlet {
 	
-	public void showCategoryImg (HttpServletRequest request, HttpServletResponse response, Page page) {
+	/*public void showCategoryImg (HttpServletRequest request, HttpServletResponse response, Page page) {
 		try {
 			String id = request.getParameter("id");
 			//读取本地图片输入流
@@ -142,7 +142,7 @@ public class CategoryServlet extends BaseBackServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	public String add(HttpServletRequest request, HttpServletResponse response, Page page) {
 		Map<String,String> params = new HashMap<>();

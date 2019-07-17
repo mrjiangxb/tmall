@@ -78,7 +78,7 @@ $(function(){
 									<c:forEach items="${o.orderItems}" var="oi">
 										<tr>
 											<td align="left"><img width="40px" height="40px"
-												src="http://localhost:8080/tmall/admin_category_showSingleImg?id=${oi.product.firstProductImage.id}">
+												src="/img/productSingle/${oi.product.firstProductImage.id}.jpg">
 											</td>
 							
 											<td><a href="foreproduct?pid=${oi.product.id}"> <span>${oi.product.name}</span>

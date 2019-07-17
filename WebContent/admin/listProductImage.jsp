@@ -77,8 +77,8 @@ $(function(){
 								<tr>
 									<td>${pi.id}</td>
 									<td><a title="点击查看原图"
-										href="http://localhost:8080/tmall/admin_category_showSingleImg?id=${pi.id}"><img height="50px"
-											src="http://localhost:8080/tmall/admin_category_showSingleImg?id=${pi.id}"></a></td>
+										href="/img/productSingle/${pi.id}.jpg"><img height="50px"
+											src="/img/productSingle/${pi.id}.jpg"></a></td>
 									<td><a deleteLink="true"
 										href="admin_productImage_delete?id=${pi.id}"><span
 											class=" 	glyphicon glyphicon-trash"></span></a></td>
@@ -132,8 +132,8 @@ $(function(){
 								<tr>
 									<td>${pi.id}</td>
 									<td><a title="点击查看原图"
-										href="http://localhost:8080/tmall/admin_category_showDetailImg?id=${pi.id}"><img height="50px"
-											src="http://localhost:8080/tmall/admin_category_showDetailImg?id=${pi.id}"></a></td>
+										href="/img/productDetail/${pi.id}.jpg"><img height="50px"
+											src="/img/productDetail/${pi.id}.jpg"></a></td>
 									<td><a deleteLink="true"
 										href="admin_productImage_delete?id=${pi.id}"><span
 											class=" 	glyphicon glyphicon-trash"></span></a></td>

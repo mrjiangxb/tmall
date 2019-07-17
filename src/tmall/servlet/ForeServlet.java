@@ -135,33 +135,31 @@ public class ForeServlet extends BaseForeServlet {
 		int cid = Integer.parseInt(request.getParameter("cid"));
 		
 		Category c = new CategoryDAO().get(cid);
+		//将该类填充产品集合
 		new ProductDAO().fill(c);
+		//为每个产品设置销售数和评论数
 		new ProductDAO().setSaleAndReviewNumber(c.getProducts());		
 		
 		String sort = request.getParameter("sort");
 		if(null!=sort){
-		switch(sort){
-			case "review":
+		switch(sort){    //利用工具类，根据传过来的排序方法，将产品排序
+			case "review":    //  产品集合                                             所用的比较器
 				Collections.sort(c.getProducts(),new ProductReviewComparator());
 				break;
 			case "date" :
 				Collections.sort(c.getProducts(),new ProductDateComparator());
 				break;
-				
 			case "saleCount" :
 				Collections.sort(c.getProducts(),new ProductSaleCountComparator());
 				break;
-				
 			case "price":
 				Collections.sort(c.getProducts(),new ProductPriceComparator());
 				break;
-				
 			case "all":
 				Collections.sort(c.getProducts(),new ProductAllComparator());
 				break;
 			}
 		}
-		
 		request.setAttribute("c", c);
 		return "category.jsp";		
 	}
@@ -223,7 +221,6 @@ public class ForeServlet extends BaseForeServlet {
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		Product p = productDAO.get(pid);
 		int num = Integer.parseInt(request.getParameter("num"));
-		
 		User user =(User) request.getSession().getAttribute("user");
 		boolean found = false;
 
@@ -236,8 +233,6 @@ public class ForeServlet extends BaseForeServlet {
 				break;
 			}
 		}		
-		
-
 		if(!found){
 			OrderItem oi = new OrderItem();
 			oi.setUser(user);
@@ -284,13 +279,11 @@ public class ForeServlet extends BaseForeServlet {
 
 	public String createOrder(HttpServletRequest request, HttpServletResponse response, Page page){
 		User user =(User) request.getSession().getAttribute("user");
-
 		String address = request.getParameter("address");
 		String post = request.getParameter("post");
 		String receiver = request.getParameter("receiver");
 		String mobile = request.getParameter("mobile");
 		String userMessage = request.getParameter("userMessage");
-		
 		String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) +RandomUtils.nextInt(10000);
 		Order order = new Order();
 		order.setOrderCode(orderCode);
@@ -301,10 +294,8 @@ public class ForeServlet extends BaseForeServlet {
 		order.setUserMessage(userMessage);
 		order.setCreateDate(new Date());
 		order.setUser(user);
-		order.setStatus(OrderDAO.waitPay);
-
+		order.setStatus(OrderDAO.waitPay);   //设置订单状态为待付款
 		orderDAO.add(order);
-
 		List<OrderItem> ois= (List<OrderItem>) request.getSession().getAttribute("ois");		
 		float total =0;
 		for (OrderItem oi: ois) {
@@ -312,7 +303,6 @@ public class ForeServlet extends BaseForeServlet {
 			orderItemDAO.update(oi);
 			total+=oi.getProduct().getPromotePrice()*oi.getNumber();
 		}
-		
 		return "@forealipay?oid="+order.getId() +"&total="+total;
 	}
 	
@@ -323,7 +313,7 @@ public class ForeServlet extends BaseForeServlet {
 	public String payed(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int oid = Integer.parseInt(request.getParameter("oid"));
 		Order order = orderDAO.get(oid);
-		order.setStatus(OrderDAO.waitDelivery);
+		order.setStatus(OrderDAO.waitDelivery);//设置订单状态为待发货
 		order.setPayDate(new Date());
 		new OrderDAO().update(order);
 		request.setAttribute("o", order);
@@ -343,7 +333,7 @@ public class ForeServlet extends BaseForeServlet {
 	public String confirmPay(HttpServletRequest request, HttpServletResponse response, Page page) {
 		int oid = Integer.parseInt(request.getParameter("oid"));
 		Order o = orderDAO.get(oid);
-		orderItemDAO.fill(o);
+		orderItemDAO.fill(o);//为订单填充订单项
 		request.setAttribute("o", o);
 		return "confirmPay.jsp";		
 	}

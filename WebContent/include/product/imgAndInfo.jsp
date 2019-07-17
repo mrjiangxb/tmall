@@ -43,8 +43,8 @@ $(function(){
 	            		var num= $(".productNumberSetting").val();
 	            		var addCartpage = "foreaddCart";
 	            		$.get(
-	            				addCartpage,
-	            	            {"pid":pid,"num":num},
+	            				addCartpage,   /* 请求路径 */
+	            	            {"pid":pid,"num":num},  /* 使用JSON传递参数  */
 	            	            function(result){
 	            	            	if("success"==result){
 	            	            		$(".addCartButton").html("已加入购物车");
@@ -53,7 +53,6 @@ $(function(){
 	            	            		$(".addCartButton").css("border-color","lightgray")
 	            	            		$(".addCartButton").css("color","black")
 	            	            	}else{
-	            	            		
 	            	            	}
 	            	            }
 	            		);		            		
@@ -137,10 +136,10 @@ $(function(){
 <div class="imgAndInfo">
 
 	<div class="imgInimgAndInfo">
-		<img src="http://localhost:8080/tmall/admin_category_showSingleImg?id=${p.firstProductImage.id}"  class="bigImg">   <!-- 默认显示第一张图片 -->
+		<img src="/img/productSingle/${p.firstProductImage.id}.jpg"  class="bigImg">   <!-- 默认显示第一张图片 -->
 		<div class="smallImageDiv">     
 			<c:forEach items="${p.productSingleImages}" var="pi">    <!-- 5张小图片 -->			
-				<img src="http://localhost:8080/tmall/admin_category_showSmallImg?id=${pi.id}" bigImageURL="http://localhost:8080/tmall/admin_category_showSingleImg?id=${pi.id}" class="smallImage">
+				<img src="/img/productSingle_small/${pi.id}.jpg" bigImageURL="/img/productSingle/${pi.id}.jpg" class="smallImage">
 			</c:forEach>
 		</div>
 		<div class="img4load hidden" ></div>

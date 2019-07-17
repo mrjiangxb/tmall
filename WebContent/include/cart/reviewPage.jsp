@@ -3,7 +3,7 @@
 	
 <div class="reviewDiv">
 	<div class="reviewProductInfoDiv">   
-		<div class="reviewProductInfoImg"><img width="400px" height="400px" src="http://localhost:8080/tmall/admin_category_showSingleImg?pid=${p.firstProductImage.id}"></div>
+		<div class="reviewProductInfoImg"><img width="400px" height="400px" src="/img/productSingle/${p.firstProductImage.id}.jpg"></div>
 		<div class="reviewProductInfoRightDiv">
 			<div class="reviewProductInfoRightText">
 				${p.name}

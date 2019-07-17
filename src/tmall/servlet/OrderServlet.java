@@ -25,8 +25,8 @@ public class OrderServlet extends BaseBackServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		Order o = orderDAO.get(id);
 		o.setDeliveryDate(new Date());
-		o.setStatus(OrderDAO.waitConfirm);
-		orderDAO.update(o);
+		o.setStatus(OrderDAO.waitConfirm);//设置订单状态为待确认
+		orderDAO.update(o);//更新数据
 		return "@admin_order_list";
 	}
 

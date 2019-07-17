@@ -22,7 +22,7 @@
 	
 	<div class="productDetailImagesPart">
 			<c:forEach items="${p.productDetailImages}" var="pi">
-				<img src="http://localhost:8080/tmall/admin_category_showDetailImg?id=${pi.id}">
+				<img src="/img/productDetail/${pi.id}.jpg">
 			</c:forEach>
 	</div>
 </div>

@@ -44,8 +44,8 @@ $(function(){
 				<c:forEach items="${thecs}" var="c">
 
 					<tr>
-						<td>${c.id}</td>
-						<td><img height="40px" src="http://localhost:8080/tmall/admin_category_showCategoryImg?id=${c.id}"></td>
+						<td>${c.id}</td>		
+						<td><img height="40px" src="/img/category/${c.id}.jpg"></td>
 						<td>${c.name}</td>
 
 						<td><a href="admin_property_list?cid=${c.id}"><span
