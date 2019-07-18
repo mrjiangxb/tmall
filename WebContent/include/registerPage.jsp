@@ -6,7 +6,40 @@
 <style type="text/css">
 	.yz{width: 135px; color: red;font-size: 20px;"}
 </style>
-		
+		<script>
+$(function(){
+	
+	<c:if test="${!empty msg}">
+	$("span.errorMessage").html("${msg}");
+	$("div.registerErrorMessageDiv").css("visibility","visible");		
+	</c:if>
+	
+	$(".registerForm").submit(function(){
+		if(0==$("#name").val().length){
+			$("span.errorMessage").html("请输入用户名");
+			$("div.registerErrorMessageDiv").css("visibility","visible");			
+			return false;
+		}		
+		if(0==$("#password").val().length){
+			$("span.errorMessage").html("请输入密码");
+			$("div.registerErrorMessageDiv").css("visibility","visible");			
+			return false;
+		}		
+		if(0==$("#repeatpassword").val().length){
+			$("span.errorMessage").html("请输入重复密码");
+			$("div.registerErrorMessageDiv").css("visibility","visible");			
+			return false;
+		}		
+		if($("#password").val() !=$("#repeatpassword").val()){
+			$("span.errorMessage").html("重复密码不一致");
+			$("div.registerErrorMessageDiv").css("visibility","visible");			
+			return false;
+		}		
+
+		return true;
+	});
+})
+</script>
 		<script type="text/javascript">
 		
 			//邮箱发送
