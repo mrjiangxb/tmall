@@ -1,16 +1,13 @@
 package tmall.servlet;
 
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +36,44 @@ import tmall.util.Page;
 
 public class ForeServlet extends BaseForeServlet {
 	
+	public static String yzm(){
+		String str="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		StringBuilder sb=new StringBuilder(4);
+		for(int i=0;i<4;i++)
+		{
+		     char ch=str.charAt(new Random().nextInt(str.length()));
+		     sb.append(ch);
+		}
+		String yzm =  sb.toString();
+		return yzm;
+		
+	}
 	
+	public  void yzm(HttpServletRequest request, HttpServletResponse response, Page page) throws IOException{
+		String email = request.getParameter("email");
+		PrintWriter out = response.getWriter();
+		System.out.println(email);
+		EMail mail = new EMail();
+		String yzm =yzm();
+		mail.setSubject("验证码");
+		String str = "您好，您的验证码是："+"   "+yzm+"，请在3分钟之内输入验证码";
+		mail.setContent(str);
+		//收件人 可以发给其他邮箱(163等) 下同
+		mail.setTo(new String[] {email});
+		
+		//发送邮件
+		try {
+			mail.sendMessage();
+			System.out.println("发送邮件成功！");
+		} catch (Exception e) {
+			System.out.println("发送邮件失败！");
+			e.printStackTrace();
+		}
+		String result = yzm;
+		out.println(result); 
+		out.close();
+		
+	}
 	
 	public String home(HttpServletRequest request, HttpServletResponse response, Page page) {
 		List<Category> cs= new CategoryDAO().list();
@@ -285,6 +319,7 @@ public class ForeServlet extends BaseForeServlet {
 		String mobile = request.getParameter("mobile");
 		String userMessage = request.getParameter("userMessage");
 		String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) +RandomUtils.nextInt(10000);
+		
 		Order order = new Order();
 		order.setOrderCode(orderCode);
 		order.setAddress(address);
@@ -295,7 +330,7 @@ public class ForeServlet extends BaseForeServlet {
 		order.setCreateDate(new Date());
 		order.setUser(user);
 		order.setStatus(OrderDAO.waitPay);   //设置订单状态为待付款
-		orderDAO.add(order);
+		String orderName = order.getOrderName();
 		List<OrderItem> ois= (List<OrderItem>) request.getSession().getAttribute("ois");		
 		float total =0;
 		for (OrderItem oi: ois) {
@@ -303,11 +338,23 @@ public class ForeServlet extends BaseForeServlet {
 			orderItemDAO.update(oi);
 			total+=oi.getProduct().getPromotePrice()*oi.getNumber();
 		}
+		orderDAO.add(order);
+		
 		return "@forealipay?oid="+order.getId() +"&total="+total;
 	}
 	
 	public String alipay(HttpServletRequest request, HttpServletResponse response, Page page){
 		return "alipay.jsp";
+		/*int oid = Integer.parseInt(request.getParameter("oid"));
+		Order order = orderDAO.get(oid);
+		
+		String out_trade_no = order.getOrderCode();
+		String total_amount = order.getTotal()+"";
+		String subject = order.getOrderName();
+		request.setAttribute("WIDout_trade_no", out_trade_no);
+		request.setAttribute("WIDtotal_amount", total_amount);
+		request.setAttribute("WIDsubject", subject);
+		return "alipay.trade.page.pay.jsp";*/
 	}
 
 	public String payed(HttpServletRequest request, HttpServletResponse response, Page page) {
@@ -346,7 +393,6 @@ public class ForeServlet extends BaseForeServlet {
 		orderDAO.update(o);
 		return "orderConfirmed.jsp";
 	}	
-	
 	
 	public String deleteOrder(HttpServletRequest request, HttpServletResponse response, Page page){
 		int oid = Integer.parseInt(request.getParameter("oid"));

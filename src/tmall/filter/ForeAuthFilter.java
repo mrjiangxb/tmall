@@ -40,7 +40,8 @@ public class ForeAuthFilter implements Filter{
 				"login",
 				"product",
 				"category",
-				"search"};
+				"search",
+				"yzm"};
 		//获取uri地址   如： /tmall/forehome
 		String uri = request.getRequestURI();
 		uri =StringUtils.remove(uri, contextPath);  //获取请求路径如forehome

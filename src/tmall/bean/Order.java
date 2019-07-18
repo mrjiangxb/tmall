@@ -8,6 +8,7 @@ import tmall.dao.OrderDAO;
 
 public class Order {
 	private String orderCode;
+	private String orderName = "天猫订单";
 	private String address;
 	private String post;
 	private String receiver;
@@ -52,6 +53,16 @@ public class Order {
 		return desc;
 	}
 	
+
+	public String getOrderName() {
+		return orderName;
+	}
+
+
+	public void setOrderName(String orderName) {
+		this.orderName = orderName;
+	}
+
 
 	public int getId() {
 		return id;
