@@ -313,13 +313,16 @@ public class ForeServlet extends BaseForeServlet {
 
 	public String createOrder(HttpServletRequest request, HttpServletResponse response, Page page){
 		User user =(User) request.getSession().getAttribute("user");
+
+		
 		String address = request.getParameter("address");
 		String post = request.getParameter("post");
 		String receiver = request.getParameter("receiver");
 		String mobile = request.getParameter("mobile");
 		String userMessage = request.getParameter("userMessage");
-		String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) +RandomUtils.nextInt(10000);
 		
+		
+		String orderCode = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()) +RandomUtils.nextInt(10000);
 		Order order = new Order();
 		order.setOrderCode(orderCode);
 		order.setAddress(address);
@@ -329,8 +332,10 @@ public class ForeServlet extends BaseForeServlet {
 		order.setUserMessage(userMessage);
 		order.setCreateDate(new Date());
 		order.setUser(user);
-		order.setStatus(OrderDAO.waitPay);   //设置订单状态为待付款
-		String orderName = order.getOrderName();
+		order.setStatus(OrderDAO.waitPay);
+
+		orderDAO.add(order);
+
 		List<OrderItem> ois= (List<OrderItem>) request.getSession().getAttribute("ois");		
 		float total =0;
 		for (OrderItem oi: ois) {
@@ -338,7 +343,6 @@ public class ForeServlet extends BaseForeServlet {
 			orderItemDAO.update(oi);
 			total+=oi.getProduct().getPromotePrice()*oi.getNumber();
 		}
-		orderDAO.add(order);
 		
 		return "@forealipay?oid="+order.getId() +"&total="+total;
 	}

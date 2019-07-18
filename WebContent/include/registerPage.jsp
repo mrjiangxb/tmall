@@ -8,6 +8,7 @@
 </style>
 		
 		<script type="text/javascript">
+		
 			//邮箱发送
 		var obj;
 			$(function(){
@@ -76,12 +77,8 @@
 						$("#pwh").text("没毛病！");
 					})
 				})
-				$(function(){
-					$("#yzm").blur(function(){
-						var yzm = $(this).val();
-						
-					})
-				})
+				$()
+				
 				
 				
 		</script>
